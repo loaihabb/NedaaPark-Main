@@ -54,7 +54,8 @@ const appointmentSchema = new mongoose.Schema({
 const Appointment = mongoose.model('Appointment', appointmentSchema);
 
 app.get('/', function(req, res) {
-  res.sendFile(__dirname + '/views/index.html');
+  res.send("Server is Running")
+  //res.sendFile(__dirname + '/public/index.html');
 });
 
 app.post('/api/add', async (req, res) => {
