@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ar">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>المواعيد</title>
+  <link rel="icon" type="image/png" href="NedaaParkLogo.jpeg" />         
+  <link href="style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+  <div id="notification-container"></div> 
+  <h1>مواعيد مزرعة نداء</h1>
+  <main>
+    <div id="notification-container"></div>
+    <section class="form">
+      <form id="add-form" method="POST">
+        
+        <label for="dateone">تاريخ تسجيل الموعد :</label>
+        <input id="dateone" class="dateone" type="date" name="dateone" placeholder="تاريخ تسجيل الموعد" required />
+    
+        <label for="name">اسم المستأجر :</label>
+        <input id="name" class="name" type="text" name="name" placeholder="اسم المستأجر" required />
+    
+        <label for="datetwo">تاريخ الاستئجار :</label>
+        <input id="datetwo" class="datetwo" type="date" name="datetwo" placeholder="تاريخ الاستئجار" required />
+    
+        <label for="number">رقم الهاتف :</label>
+        <input id="number" class="number" type="tel" name="number" placeholder="رقم الهاتف" required />
+    
+        <label for="time">وقت الدخول :</label>
+        <select id="time" class="time" name="time" required>
+          <option value="10:00">10 صباحًا</option>
+          <option value="22:00">10 مساءً</option>
+        </select>
+    
+        <label for="timetwo">وقت الخروج :</label>
+        <select id="timetwo" class="timetwo" name="timetwo" required>
+          <option value="9:00">9 صباحًا</option>
+          <option value="21:00">9 مساءً</option>
+        </select>
+    
+        <label for="deposit">العربون :</label>
+        <input id="deposit" class="deposit" type="number" name="deposit" placeholder="العربون" required />
+    
+        <label for="rent">الايجار :</label>
+        <input id="rent" class="rent" type="number" name="rent" placeholder="الايجار" required />
+    
+        <button type="submit">اضافة</button>
+      </form>
+      <div class="month-button">
+      <div class="sort-buttons">
+        <button id="sort-newest">ترتيب من الأقدم إلى الأحدث</button>
+        <button id="sort-oldest">ترتيب من الأحدث إلى الأقدم</button>
+        <button id="sort-normal">الترتيب بحسب وقت الاضافة</button>
+      </div>
+      <div class="month-select">
+        <label class="month-label" for="month">اختر شهرًا</label>
+        <select id="month" name="month">
+          <option value="0"></option>
+          <option value="1">January</option>
+          <option value="2">February</option>
+          <option value="3">March</option>
+          <option value="4">April</option>
+          <option value="5">May</option>
+          <option value="6">June</option>
+          <option value="7">July</option>
+          <option value="8">August</option>
+          <option value="9">September</option>
+          <option value="10">October</option>
+          <option value="11">November</option>
+          <option value="12">December</option>
+        </select>
+      </div>
+      
+    </div>
+    <div class="boxes">
+      <div class="color-boxes">
+        <div class="color-box" style="background-color: #E9F063"></div>
+        <p>&nbsp; - &nbsp;حجز نص يوم الا اذا كان في يوم ازرق بنفس التاريخ بكون هذا اليوم الثاني</p>
+      </div>
+      <div class="color-boxes">
+        <div class="color-box" style="background-color: #99E575;"></div>
+        <p>&nbsp; - &nbsp;محجوز يوم كامل</p>
+      </div>
+      <div class="color-boxes">
+        <div class="color-box" style="background-color: #5DADE2;"></div>
+        <p>&nbsp; - &nbsp;كان محجوز نص يوم وصار يوم كامل</p>
+      </div>
+      <div class="color-boxes">
+        <div class="color-box" style="background-color: #FFF;"></div>
+        <p>&nbsp; - &nbsp;فاضي للحجز</p>
+      </div>
+    </div>
+    </section>
+    <section>
+      <div id="appointment-list"></div>
+    </section>
+    <section class="total">
+      <div>
+      <h2> مجموع الايجارات</h2>
+      <p id="total-rent">المجموع : <span id="total-amount">0</span><span> دينار </span></p>
+      </div>
+      <div >
+      <h2> مجموع العربون</h2>
+      <p id="total-deposit">المجموع : <span id="total-deposit-amount">0</span><span> دينار </span></p>
+    </div>
+    </section>
+    <section class="calendar-class">
+    <div class="calendar"></div>
+  </section>
+  </main>
+  <footer>
+    <p style="font-weight: bold;">By <a href="https://www.facebook.com/nedaapark">Nedaa Park</a></p>
+  </footer>
+  <script src="main.js"></script>
+</body>
+</html>

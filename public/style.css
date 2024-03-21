@@ -1,0 +1,422 @@
+/* style.css */
+body {
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  color: #222;
+  background-color: #494949;
+  text-align: center;
+  line-height: 1.4em;
+  margin: 0;
+  padding: 0;
+  direction: rtl;
+}
+
+h1 {
+  margin-top: 70px;
+  color: darkgoldenrod;
+}
+
+main {
+  padding: 20px;
+}
+
+section {
+  margin-top: 20px;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+form {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  justify-content: center;
+  margin-bottom: 20px;
+  text-align: right;
+  flex-wrap: wrap;
+  background-color: #b1afaf;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+}
+
+input {
+  padding: 15px 30px;
+  margin: 5px;
+  border: 3px solid #ccc;
+  border-radius: 15px;
+  width: 12%;
+}
+.form .time,.timetwo{
+  padding: 15px 30px;
+  margin: 5px;
+  border: 3px solid #ccc;
+  border-radius: 15px;
+  width: 12%;
+}
+
+
+button {
+  padding: 15px 40px;
+  background-color: #2574a9;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.7s ease;
+  margin: 20px;
+  font-size: medium;
+}
+
+#add-button {
+  margin-bottom: 10px;
+  padding: 13px;
+  width: 10%;
+  margin-top: auto;
+  margin-left: 5px;
+}
+
+button:hover {
+  background-color: #1b5480;
+  transform: scale(1.1);
+}
+
+label {
+  margin-right: 10px;
+}
+
+.boxes {
+  display: flex;
+  flex-direction: row;
+  direction: rtl;
+  justify-content: space-around;
+}
+
+.color-boxes p {
+  color: #FFF;
+  font-weight: bold;
+}
+
+.color-boxes {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  flex-direction: row;
+}
+
+.color-box {
+  width: 30px;
+  height: 30px;
+  margin-right: 10px;
+  border-radius: 4px;
+}
+
+.appointment {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  border: 2px solid #ccc;
+  border-radius: 3px;
+  margin-bottom: 10px;
+  direction: ltr;
+  border-radius: 5px;
+  transition: 0.7s ease;
+}
+
+.appointment:hover {
+  transform: scale(1.02);
+}
+
+.appointment p {
+  transition: 0.7s ease;
+}
+
+.appointment p:hover {
+  transform: scale(1.1);
+}
+
+.remove-button {
+  background-color: #f44336;
+  transition: 0.7s ease;
+}
+
+.remove-button:hover {
+  background-color: #d32f2f;
+  transform: scale(1.1);
+}
+
+.total {
+  background-color: #d8d8d8;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  border-radius: 10px;
+}
+
+#total-rent,
+#total-deposit {
+  font-weight: bold;
+  font-size: large;
+  color: rgb(184, 142, 38);
+}
+
+.calendar-class {
+  padding: 20px;
+  background-color: "white";
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.calendar {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-gap: 5px;
+  width: 300px;
+}
+
+.day {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.month-select label {
+  display: flex;
+  align-items: center;
+  font-size: 1.1em;
+  font-weight: bold;
+  margin-left: 5px;
+  color: darkgoldenrod;
+
+}
+
+.month-select select {
+  font-weight: 1.2em;
+  margin: auto;
+  padding: 10px;
+  border-radius: 15px;
+  margin-right: 10px;
+  color: darkgoldenrod;
+
+}
+
+.month-select select:focus {
+  outline: none;
+  border-color: darkgoldenrod;
+}
+
+.month-select select {
+  padding-right: 2em;
+}
+
+.month-button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.month-select {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+}
+
+.yellow {
+  background-color: #E9F063;
+}
+
+.green {
+  background-color: #99E575;
+}
+
+#notification-container {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+}
+
+.notification {
+  background-color: #333;
+  color: white;
+  padding: 15px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.notification.show {
+  opacity: 1;
+}
+
+.notification-error {
+  background-color: red;
+  color: white;
+}
+
+.notification-success {
+  background-color: green;
+  color: white;
+}
+
+.notification-warning {
+  background-color: yellow;
+  color: white;
+}
+
+footer {
+  position: static;
+  bottom: 0;
+  margin-top: 30px;
+  padding: 20px;
+  background-color: #f3f3f3;
+}
+
+@media (max-width: 767px) {
+  h1 {
+    margin-top: 40px;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    text-align: right;
+  }
+
+  .form input {
+    font-size: small;
+    width: 70%;
+    text-align: right;
+  }
+
+  input {
+    padding: 10px 20px;
+    margin: 5px;
+    border: 3px solid #ccc;
+    border-radius: 10px;
+    width: 10%;
+  }
+
+  .remove-button {
+    display: flex;
+    justify-content: baseline;
+  }
+
+  button {
+    padding: 10px;
+    margin: 10px;
+  }
+
+  .appointment {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    padding: 0;
+    margin: auto;
+    padding: 10px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-top: 10px;
+  }
+
+  .appointment p {
+    margin: 5px;
+  }
+  .form .time,.timetwo{
+    font-size: small;
+    width: 83%;
+    text-align: right;
+    padding: 10px 20px;
+    margin: 5px;
+    border: 3px solid #ccc;
+    border-radius: 10px;
+    
+  }
+  html,
+  body {
+    width: fit-content;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  .sort-buttons button {
+    font-size: small;
+  }
+
+  .month-select label {
+    position: relative;
+    font-size: 1.1em;
+    font-weight: bold;
+    margin: 10px;
+    color: darkgoldenrod;
+    padding: 5%;
+    margin-right: 20px;
+    padding-right: 20px;
+  }
+
+  .month-select {
+    display: flex;
+    flex-direction: column;
+    padding: 1em;
+  }
+
+  .sort-buttons {
+    justify-content: flex-start;
+  }
+
+  .sort-buttons button {
+    font-size: small;
+  }
+
+  .boxes {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    direction: rtl;
+  }
+
+  .color-boxes {
+    display: flex;
+    margin-bottom: 10px;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  #total-rent,
+  #total-deposit {
+    font-weight: bold;
+    font-size: medium;
+    color: rgb(184, 142, 38);
+  }
+
+  .total h2 {
+    font-size: large;
+  }
+
+  input {
+    width: 50%;
+  }
+
+  p {
+    font-size: small;
+    margin: auto;
+    padding: 5px;
+  }
+}
