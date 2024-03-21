@@ -54,7 +54,8 @@ const appointmentSchema = new mongoose.Schema({
 const Appointment = mongoose.model('Appointment', appointmentSchema);
 
 app.get('/', function(req, res) {
-  res.sendFile(__dirname + '/public/index.html');
+  res.send("Server is Running")
+  //res.sendFile(__dirname + './public/index.html');
 });
 
 app.post('/api/add', async (req, res) => {
@@ -75,6 +76,8 @@ app.post('/api/add', async (req, res) => {
 
   try {
     await newAppointment.save();
+    //const savedAppointment = 
+    //console.log('Kaydedildi:', savedAppointment);
     res.status(200).json({ message: 'Appointment added successfully' });
   } catch (error) {
     console.error('kaydedilemedi:', error);
