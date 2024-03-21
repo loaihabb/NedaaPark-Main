@@ -53,10 +53,6 @@ const appointmentSchema = new mongoose.Schema({
 
 const Appointment = mongoose.model('Appointment', appointmentSchema);
 
-app.get('/', function(req, res) {
-  res.sendFile(__dirname + './index.html');
-});
-
 app.post('/api/add', async (req, res) => {
 
   const { dateone, name, datetwo, number, time, timetwo, deposit, rent } = req.body;
@@ -75,8 +71,6 @@ app.post('/api/add', async (req, res) => {
 
   try {
     await newAppointment.save();
-    //const savedAppointment = 
-    //console.log('Kaydedildi:', savedAppointment);
     res.status(200).json({ message: 'Appointment added successfully' });
   } catch (error) {
     console.error('kaydedilemedi:', error);
