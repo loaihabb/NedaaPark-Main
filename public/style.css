@@ -465,12 +465,14 @@ footer {
     width: 100%; /* Genişlik tam ekran olacak şekilde ayarla */
   }
   input[type="date"] {
-    padding: 14px 30px; /* Tarih alanı için padding değerini artır */
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    padding: 10px; /* Tarih alanı için padding ekle */
     font-size: 16px; /* Yazı boyutunu artır */
     border-radius: 10px;
     border: 1px solid #ccc;
     background-color: #D6DAC8;
-    width: 150%; /* Genişliği diğer alanlara uyacak şekilde ayarla */
-    margin-bottom: 10px; /* Alanlar arası boşluk ekleyerek düzeni iyileştir */
+    width: 100%; /* Genişlik tam ekran olacak şekilde ayarla */
   }
 }
