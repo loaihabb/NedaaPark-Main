@@ -4,6 +4,15 @@
     "routes": [{ "src": "/(.*)", "dest": "./"}],
     "env": {
       "MONGODB_URI": "mongodb+srv://Loiy:12345@nedaa.dnlqzqp.mongodb.net/?retryWrites=true&w=majority"
-    }
+    },
+    
+      "rewrites": [
+        {
+          "source": "/(.*)",
+          "destination": "/"
+        }
+      ]
+    
+    
   }
   
