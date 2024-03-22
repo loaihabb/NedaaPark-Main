@@ -10,11 +10,15 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static('public')); // Assuming your static files are in a 'public' directory
 app.use(express.json());
 
-
-mongoose.connect('mongodb+srv://Loiy:12345@nedaa.dnlqzqp.mongodb.net/?retryWrites=true&w=majority', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-}).then(res.send("Database is Running"));
+try {
+  mongoose.connect('mongodb+srv://Loiy:12345@nedaa.dnlqzqp.mongodb.net/?retryWrites=true&w=majority', {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  }).then(console.log("Mongodb connected"));
+    
+} catch (error) {
+  console.log("Database cannot connect" + error)  
+}
 
 const appointmentSchema = new mongoose.Schema({
   dateone: {
