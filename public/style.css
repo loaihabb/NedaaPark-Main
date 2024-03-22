@@ -46,9 +46,6 @@ button:hover {
   transform: scale(1.1);
 }
 
-label {
-  margin-right: 10px;
-}
 
 form {
   background-color: #92967D;
@@ -118,8 +115,7 @@ button[type="submit"]:hover {
 }
 
 /* Diğer stillendirmeler */
-.sort-buttons button,
-.month-select select {
+.sort-buttons button {
   margin-bottom: 10px;
 }
 
@@ -222,46 +218,37 @@ button[type="submit"]:hover {
   
 }
 
-.month-select label {
-  display: flex;
-  align-items: center;
-  font-size: 1.1em;
-  font-weight: bold;
-  margin-left: 5px;
-  color: darkgoldenrod;
-
-}
-
-.month-select select {
-  font-weight: 1.2em;
-  margin: auto;
+.month-label {
+  font-size: 20px;
+  font-weight: 700;
   padding: 10px;
-  border-radius: 15px;
-  margin-right: 10px;
   color: darkgoldenrod;
-
 }
+.sort-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  align-items: center;
+} 
 
 .month-select select:focus {
   outline: none;
   border-color: darkgoldenrod;
 }
 
-.month-select select {
-  padding-right: 2em;
-}
 
 .month-button {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-evenly;
 }
 
 .month-select {
   display: flex;
-  justify-content: space-between;
+  flex-wrap: nowrap;
+  justify-content: space-around;
   align-items: center;
-  padding: 15px;
+  padding: 15px 10px;
 }
 
 .yellow {
@@ -337,6 +324,16 @@ footer {
     width: auto;
   }
 
+  .sorts{
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+  }
+
+  .sort-buttons{
+    margin: auto;
+    justify-content: center;
+  }
   .remove-button {
     display: flex;
     justify-content: baseline;
@@ -345,6 +342,12 @@ footer {
   button {
     padding: 10px;
     margin: 10px;
+  }
+
+  button[type="submit"] {
+    width: auto;
+    font-size: medium;
+    padding: 10px 30px;
   }
 
   .appointment {
@@ -384,29 +387,10 @@ footer {
     font-size: small;
   }
 
-  .month-select label {
-    position: relative;
-    font-size: 1.1em;
-    font-weight: bold;
-    margin: 10px;
-    color: darkgoldenrod;
-    padding: 5%;
-    margin-right: 20px;
-    padding-right: 20px;
-  }
-
   .month-select select{
     display: flex;
     flex-direction: column;
-    padding: 10px 40px;
-  }
-
-  .sort-buttons {
-    justify-content: flex-start;
-  }
-
-  .sort-buttons button {
-    font-size: small;
+    padding: 9px 40px;
   }
 
   .boxes {
@@ -455,5 +439,13 @@ footer {
   }
   button[type="submit"] {
     width: auto;
+    font-size: medium;
+    padding: 10px 25px;
+  }
+
+  .month-select select{
+    display: flex;
+    flex-direction: column;
+    padding: 7px 30px;
   }
 }
