@@ -17,6 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const timetwoOptions = ["9:00", "21:00"];
   const appointments = [];
 
+  VERCEL_API = "https://nedaa-park-server-4hxpbl1or-loaihabb.vercel.app"
 
   const today = new Date();
   const currentMonth = today.getMonth() + 1; // JavaScript'te aylar 0-11 arasında olduğu için +1 ekliyoruz
@@ -211,7 +212,7 @@ addForm.addEventListener("submit", async (event) => {
   }
 
   try {
-    const response = await fetch("/api/add", {
+    const response = await fetch(`${VERCEL_API}/api/add`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -240,7 +241,7 @@ addForm.addEventListener("submit", async (event) => {
     appointmentList.innerHTML = "";
 
     // Verileri sunucudan al
-    const response = await fetch("/api/appointments");
+    const response = await fetch(`${VERCEL_API}/api/appointments`);
     const data = await response.json();
     appointments.length = 0;
     appointments.push(...data);
@@ -300,7 +301,7 @@ addForm.addEventListener("submit", async (event) => {
 
           // Veriyi sunucudan sil ve MongoDB'den de kaldır
           const deleteResponse = await fetch(
-            `/api/appointments/${idToDelete}`,
+            `${VERCEL_API}/api/appointments/${idToDelete}`,
             {
               method: "DELETE",
             }
@@ -336,7 +337,7 @@ async function updateTotal(selectedMonth) {
   const totalRentSpan = document.getElementById("total-amount");
   const totalDepositSpan = document.getElementById("total-deposit-amount"); // Değiştirildi
 
-  fetch("/api/appointments")
+  fetch(`${VERCEL_API}/api/appointments`)
     .then((response) => response.json())
     .then((data) => {
       const filteredData = data.filter(appointment =>
@@ -367,7 +368,7 @@ async function updateCalendar(selectedMonth) {
   const daysInMonth = new Date(currentYear, selectedMonth + 1, 0).getDate(); // Ayın gün sayısını al
 
   try {
-    const response = await fetch("/api/appointments");
+    const response = await fetch(`${VERCEL_API}/api/appointments`);
     const data = await response.json();
 
     for (let day = 1; day <= daysInMonth; day++) {
