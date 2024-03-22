@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", () => {
   updateAppointmentList(selectedMonth)
   updateTotal(selectedMonth);
   updateCalendar(selectedMonth);
-  
+
   timeInput.innerHTML = timeOptions.map(option => `<option value="${option}">${option}</option>`).join("");
   timetwoInput.innerHTML = timetwoOptions.map(option => `<option value="${option}">${option}</option>`).join("");
 
@@ -375,7 +375,7 @@ async function updateCalendar(selectedMonth) {
     const VERCEL_API = "https://nedaa-park-server.vercel.app"
     const response = await fetch(`${VERCEL_API}/api/appointments`);
     const data = await response.json();
-    console.log("Calendar : " , data)
+    //console.log("Calendar : " , data)
     for (let day = 1; day <= daysInMonth; day++) {
       const dayElement = document.createElement("div");
       dayElement.classList.add("day");
