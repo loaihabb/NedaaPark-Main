@@ -17,8 +17,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const timetwoOptions = ["9:00", "21:00"];
   const appointments = [];
 
-  //VERCEL_API = "https://nedaa-park-server.vercel.app"
-  VERCEL_API = "https://localhost:3000"
+  VERCEL_API = "https://nedaa-park-server.vercel.app"
+  
 
   const today = new Date();
   const currentMonth = today.getMonth() + 1; // JavaScript'te aylar 0-11 arasında olduğu için +1 ekliyoruz
