@@ -303,7 +303,7 @@ footer {
   background: linear-gradient(180deg, #92967D 0%, #737662 43%, #666a57 100%);
 }
 
-@media (max-width: 767px) {
+@media (max-width: 867px) {
   h1 {
     margin-top: 30px;
     font-size: 200%;
