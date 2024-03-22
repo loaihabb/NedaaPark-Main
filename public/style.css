@@ -458,18 +458,19 @@ footer {
     -webkit-appearance: none;
     -moz-appearance: none;
     padding: 10px; /* Seçim alanı için padding ekle */
-    font-size: 16px; /* Yazı boyutunu artır */
+    font-size: 14px; /* Yazı boyutunu artır */
     border-radius: 10px;
     border: 1px solid #ccc;
     background-color: #D6DAC8;
     width: 100%; /* Genişlik tam ekran olacak şekilde ayarla */
   }
   input[type="date"] {
-    padding: 10px; /* Tarih alanı için padding ekle */
-    font-size: 16px; /* Yazı boyutunu artır */
+    padding: 12px; /* Tarih alanı için padding değerini artır */
+    font-size: 14px; /* Yazı boyutunu artır */
     border-radius: 10px;
     border: 1px solid #ccc;
     background-color: #D6DAC8;
-    width: 100%; /* Genişlik tam ekran olacak şekilde ayarla */
+    width: calc(100% - 22px); /* Genişliği diğer alanlara uyacak şekilde ayarla */
+    margin-bottom: 10px; /* Alanlar arası boşluk ekleyerek düzeni iyileştir */
   }
 }
