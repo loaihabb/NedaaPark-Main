@@ -341,6 +341,7 @@ async function updateTotal(selectedMonth) {
   fetch(`${VERCEL_API}/api/appointments`)
     .then((response) => response.json())
     .then((data) => {
+      console.log("Total : " + data)
       const filteredData = data.filter(appointment =>
         new Date(appointment.datetwo).getMonth() === selectedMonth
       );
@@ -360,7 +361,7 @@ async function updateTotal(selectedMonth) {
       console.error("Veriler getirilemedi:", error);
     });
 }
-updateTotal();
+updateTotal();  
 
 async function updateCalendar(selectedMonth) {
   const calendar = document.querySelector(".calendar");
@@ -371,7 +372,7 @@ async function updateCalendar(selectedMonth) {
   try {
     const response = await fetch(`${VERCEL_API}/api/appointments`);
     const data = await response.json();
-
+    console.log("Calendar : " + data)
     for (let day = 1; day <= daysInMonth; day++) {
       const dayElement = document.createElement("div");
       dayElement.classList.add("day");
