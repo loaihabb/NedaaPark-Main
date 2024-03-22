@@ -225,11 +225,14 @@ addForm.addEventListener("submit", async (event) => {
     await response.json();
     if (response.ok) {
       appointments.push(appointment);
+      location.reload()
+      /*
       const selectedMonth = parseInt(monthSelect.value) - 1;
       await updateAppointmentList(selectedMonth);
       await updateCalendar(selectedMonth);
       await updateTotal(selectedMonth);
       clearInputs();
+      */
     } else {
       console.log("hata:", response.data);
       console.error("Veri eklenemedi");
@@ -333,7 +336,6 @@ addForm.addEventListener("submit", async (event) => {
     rentInput.value = "";
   }
   updateAppointmentList();
-  location.reload()
 });
 
 async function updateTotal(selectedMonth) {
