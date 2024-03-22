@@ -10,6 +10,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static('public')); // Assuming your static files are in a 'public' directory
 app.use(express.json());
 
+VERCEL_API = "https://nedaa-park-server-4hxpbl1or-loaihabb.vercel.app"
 
 mongoose.connect('mongodb+srv://Loiy:12345@nedaa.dnlqzqp.mongodb.net/?retryWrites=true&w=majority', {
   useNewUrlParser: true,
@@ -58,7 +59,7 @@ app.get('/', function(req, res) {
   //res.sendFile(__dirname + './public/index.html');
 });
 
-app.post('/api/add', async (req, res) => {
+app.post(`${VERCEL_API}/api/add`, async (req, res) => {
 
   const { dateone, name, datetwo, number, time, timetwo, deposit, rent } = req.body;
 
@@ -85,7 +86,7 @@ app.post('/api/add', async (req, res) => {
   }
 });
 
-app.get('/api/appointments', async (req, res) => {
+app.get(`${VERCEL_API}/api/appointments`, async (req, res) => {
   try {
     const appointments = await Appointment.find();
     res.json(appointments);
@@ -95,7 +96,7 @@ app.get('/api/appointments', async (req, res) => {
   }
 });
 
-app.delete('/api/appointments/:id', async (req, res) => {
+app.delete(`${VERCEL_API}/api/appointments/:id`, async (req, res) => {
   const { id } = req.params;
 
   try {
