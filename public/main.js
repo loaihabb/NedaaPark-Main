@@ -334,10 +334,10 @@ addForm.addEventListener("submit", async (event) => {
   updateAppointmentList();
 });
 
-async function updateTotal(VERCEL_API, selectedMonth) {
+async function updateTotal(selectedMonth) {
   const totalRentSpan = document.getElementById("total-amount");
   const totalDepositSpan = document.getElementById("total-deposit-amount"); // Değiştirildi
-
+  const VERCEL_API = "https://nedaa-park-server.vercel.app"
   fetch(`${VERCEL_API}/api/appointments`)
     .then((response) => response.json())
     .then((data) => {
@@ -361,7 +361,7 @@ async function updateTotal(VERCEL_API, selectedMonth) {
       console.error("Veriler getirilemedi:", error);
     });
 }
-updateTotal(VERCEL_API, selectedMonth);  
+updateTotal();  
 
 async function updateCalendar(selectedMonth) {
   const calendar = document.querySelector(".calendar");
