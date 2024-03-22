@@ -449,3 +449,19 @@ footer {
     padding: 7px 30px;
   }
 }
+
+/* iPhone için özel stil */
+@media only screen and (max-device-width: 414px) { /* iPhone ekran genişliği */
+  /* Seçilebilir alanlar için özel stiller */
+  select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    padding: 10px; /* Seçim alanı için padding ekle */
+    font-size: 16px; /* Yazı boyutunu artır */
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    background-color: #D6DAC8;
+    width: 100%; /* Genişlik tam ekran olacak şekilde ayarla */
+  }
+}
