@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const timetwoOptions = ["9:00", "21:00"];
   const appointments = [];
 
-  VERCEL_API = "https://nedaa-park-server.vercel.app"
+  const VERCEL_API = "https://nedaa-park-server.vercel.app"
   
 
   const today = new Date();
