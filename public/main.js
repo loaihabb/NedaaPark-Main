@@ -332,8 +332,8 @@ addForm.addEventListener("submit", async (event) => {
     depositInput.value = "";
     rentInput.value = "";
   }
-
-  updateAppointmentList(selectedMonth);
+  updateAppointmentList();
+  location.reload()
 });
 
 async function updateTotal(selectedMonth) {
