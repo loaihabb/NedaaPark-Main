@@ -24,7 +24,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const currentMonth = today.getMonth() + 1; // JavaScript'te aylar 0-11 arasında olduğu için +1 ekliyoruz
   const selectedMonth = parseInt(currentMonth) - 1; // Seçilen ayı al ve 0-11 aralığına çevir
   updateAppointmentList(selectedMonth)
-
+  updateTotal(selectedMonth);
+  updateCalendar(selectedMonth);
+  
   timeInput.innerHTML = timeOptions.map(option => `<option value="${option}">${option}</option>`).join("");
   timetwoInput.innerHTML = timetwoOptions.map(option => `<option value="${option}">${option}</option>`).join("");
 
@@ -341,7 +343,7 @@ async function updateTotal(selectedMonth) {
   fetch(`${VERCEL_API}/api/appointments`)
     .then((response) => response.json())
     .then((data) => {
-      console.log("Total : " , data)
+      //console.log("Total : " , data)
       const filteredData = data.filter(appointment =>
         new Date(appointment.datetwo).getMonth() === selectedMonth
       );
