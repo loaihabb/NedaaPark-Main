@@ -334,7 +334,7 @@ addForm.addEventListener("submit", async (event) => {
   updateAppointmentList();
 });
 
-async function updateTotal(selectedMonth) {
+async function updateTotal(VERCEL_API, selectedMonth) {
   const totalRentSpan = document.getElementById("total-amount");
   const totalDepositSpan = document.getElementById("total-deposit-amount"); // Değiştirildi
 
@@ -361,7 +361,7 @@ async function updateTotal(selectedMonth) {
       console.error("Veriler getirilemedi:", error);
     });
 }
-updateTotal();  
+updateTotal(VERCEL_API);  
 
 async function updateCalendar(selectedMonth) {
   const calendar = document.querySelector(".calendar");
