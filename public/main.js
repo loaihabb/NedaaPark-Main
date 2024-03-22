@@ -333,7 +333,7 @@ addForm.addEventListener("submit", async (event) => {
     rentInput.value = "";
   }
 
-  updateAppointmentList();
+  updateAppointmentList(selectedMonth);
 });
 
 async function updateTotal(selectedMonth) {
