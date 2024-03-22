@@ -14,11 +14,7 @@ app.use(express.json());
 mongoose.connect('mongodb+srv://Loiy:12345@nedaa.dnlqzqp.mongodb.net/?retryWrites=true&w=majority', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
-}).then(() => {
-  console.log("Mongodb connected");
-}).catch(error => {
-  console.error("Mongodb connection error:", error);
-});
+}).then(console.log("Mongodb connected"));
 
 const appointmentSchema = new mongoose.Schema({
   dateone: {
@@ -58,8 +54,8 @@ const appointmentSchema = new mongoose.Schema({
 const Appointment = mongoose.model('Appointment', appointmentSchema);
 
 app.get('/', function(req, res) {
-  res.send("Server is Running")
-  //res.sendFile(__dirname + './public/index.html');
+  //res.send("Server is Running")
+  res.sendFile(__dirname + './public/index.html');
 });
 
 app.post('/api/add', async (req, res) => {
