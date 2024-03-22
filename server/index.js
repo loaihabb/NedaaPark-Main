@@ -85,6 +85,38 @@ app.post('/api/add', async (req, res) => {
   }
 });
 
+app.get('/api/app', async (req, res) => {
+  try {
+    const appointments = {
+      "appointments": [
+        {
+          "id": 1,
+          "name": "John Doe",
+          "date": "2024-03-20",
+          "time": "10:00 AM"
+        },
+        {
+          "id": 2,
+          "name": "Jane Smith",
+          "date": "2024-03-21",
+          "time": "11:00 AM"
+        },
+        {
+          "id": 3,
+          "name": "Alice Johnson",
+          "date": "2024-03-22",
+          "time": "02:00 PM"
+        }
+      ]
+    };
+    res.json(appointments);
+  } catch (error) {
+    console.error('Veriler getirilemedi:', error);
+    res.status(500).json({ error: 'Error fetching appointments' });
+  }
+});
+
+
 app.get('/api/appointments', async (req, res) => {
   try {
     const appointments = await Appointment.find();
