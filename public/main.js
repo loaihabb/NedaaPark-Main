@@ -36,6 +36,9 @@ document.addEventListener("DOMContentLoaded", () => {
   await updateTotal(selectedMonth);
   await updateCalendar(selectedMonth);
 });
+  const currentDate = today.toISOString().split('T')[0];
+  dateoneInput.value = currentDate;
+  datetwoInput.value = currentDate;
 
   dateoneInput.addEventListener("change", () => {
     checkSelectedDates();

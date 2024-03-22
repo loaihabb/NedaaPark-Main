@@ -468,8 +468,8 @@ footer {
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
-    padding: 10px; /* Tarih alanı için padding ekle */
-    font-size: 15px; /* Yazı boyutunu artır */
+    padding: 9px; /* Tarih alanı için padding ekle */
+    font-size: 14px; /* Yazı boyutunu artır */
     border-radius: 10px;
     border: 1px solid #ccc;
     background-color: #D6DAC8;
