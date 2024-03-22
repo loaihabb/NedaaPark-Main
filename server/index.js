@@ -53,7 +53,7 @@ const appointmentSchema = new mongoose.Schema({
 
 const Appointment = mongoose.model('Appointment', appointmentSchema);
 
-app.get('/', function(req, res) {
+app.get('https://nedaa-park-server.vercel.app/', function(req, res) {
   res.send("Server is Running")
   //res.sendFile(__dirname + './public/index.html');
 });
@@ -85,7 +85,7 @@ app.post('/api/add', async (req, res) => {
   }
 });
 
-app.get('/api/appointments', async (req, res) => {
+app.get('https://nedaa-park-server.vercel.app/api/appointments', async (req, res) => {
   try {
     const appointments = await Appointment.find();
     res.json(appointments);
