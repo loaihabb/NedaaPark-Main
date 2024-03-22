@@ -30,16 +30,16 @@ document.addEventListener("DOMContentLoaded", () => {
   timeInput.innerHTML = timeOptions.map(option => `<option value="${option}">${option}</option>`).join("");
   timetwoInput.innerHTML = timetwoOptions.map(option => `<option value="${option}">${option}</option>`).join("");
 
+  const currentDate = today.toISOString().split('T')[0];
+  dateoneInput.value = currentDate;
+  datetwoInput.value = currentDate;
+
   monthSelect.addEventListener("change", async () => {
     const selectedMonth = parseInt(monthSelect.value) - 1; // Seçilen ayı al ve 0-11 aralığına çevir
   await updateAppointmentList(selectedMonth);
   await updateTotal(selectedMonth);
   await updateCalendar(selectedMonth);
 });
-
-  const currentDate = today.toISOString().split('T')[0];
-  dateoneInput.value = currentDate;
-  datetwoInput.value = currentDate;
 
   dateoneInput.addEventListener("change", () => {
     checkSelectedDates();
