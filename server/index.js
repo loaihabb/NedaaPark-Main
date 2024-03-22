@@ -81,7 +81,7 @@ app.post('/api/add', async (req, res) => {
     res.status(200).json({ message: 'Appointment added successfully' });
   } catch (error) {
     console.error('kaydedilemedi:', error);
-    res.status(500).json({ error: 'Error adding appointment' });
+    res.status(500).json({ error: error });
   }
 });
 
