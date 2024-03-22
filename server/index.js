@@ -14,7 +14,7 @@ app.use(express.json());
 mongoose.connect('mongodb+srv://Loiy:12345@nedaa.dnlqzqp.mongodb.net/?retryWrites=true&w=majority', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
-}).then(console.log("Mongodb connected"));
+}).then(res.send("Database is Running"));
 
 const appointmentSchema = new mongoose.Schema({
   dateone: {
