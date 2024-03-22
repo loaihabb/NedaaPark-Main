@@ -361,7 +361,7 @@ async function updateTotal(VERCEL_API, selectedMonth) {
       console.error("Veriler getirilemedi:", error);
     });
 }
-updateTotal(VERCEL_API);  
+updateTotal(VERCEL_API, selectedMonth);  
 
 async function updateCalendar(selectedMonth) {
   const calendar = document.querySelector(".calendar");
@@ -370,6 +370,7 @@ async function updateCalendar(selectedMonth) {
   const daysInMonth = new Date(currentYear, selectedMonth + 1, 0).getDate(); // Ayın gün sayısını al
 
   try {
+    const VERCEL_API = "https://nedaa-park-server.vercel.app"
     const response = await fetch(`${VERCEL_API}/api/appointments`);
     const data = await response.json();
     console.log("Calendar : " + data)
