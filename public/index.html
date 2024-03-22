@@ -14,37 +14,52 @@
     <div id="notification-container"></div>
     <section class="form">
       <form id="add-form" method="POST">
-        
-        <label for="dateone">تاريخ تسجيل الموعد :</label>
-        <input id="dateone" class="dateone" type="date" name="dateone" placeholder="تاريخ تسجيل الموعد" required />
-    
-        <label for="name">اسم المستأجر :</label>
-        <input id="name" class="name" type="text" name="name" placeholder="اسم المستأجر" required />
-    
-        <label for="datetwo">تاريخ الاستئجار :</label>
-        <input id="datetwo" class="datetwo" type="date" name="datetwo" placeholder="تاريخ الاستئجار" required />
-    
-        <label for="number">رقم الهاتف :</label>
-        <input id="number" class="number" type="tel" name="number" placeholder="رقم الهاتف" required />
-    
-        <label for="time">وقت الدخول :</label>
-        <select id="time" class="time" name="time" required>
-          <option value="10:00">10 صباحًا</option>
-          <option value="22:00">10 مساءً</option>
-        </select>
-    
-        <label for="timetwo">وقت الخروج :</label>
-        <select id="timetwo" class="timetwo" name="timetwo" required>
-          <option value="9:00">9 صباحًا</option>
-          <option value="21:00">9 مساءً</option>
-        </select>
-    
-        <label for="deposit">العربون :</label>
-        <input id="deposit" class="deposit" type="number" name="deposit" placeholder="العربون" required />
-    
-        <label for="rent">الايجار :</label>
-        <input id="rent" class="rent" type="number" name="rent" placeholder="الايجار" required />
-    
+        <div class="form-column">
+          <div class="form-row">
+            <label for="dateone">تاريخ تسجيل الموعد :</label>
+            <input id="dateone" class="dateone" type="date" name="dateone" placeholder="تاريخ تسجيل الموعد" required />
+          </div>
+          <div class="form-row">
+            <label for="name">اسم المستأجر :</label>
+            <input id="name" class="name" type="text" name="name" placeholder="اسم المستأجر" required />
+          </div>
+        </div>
+        <div class="form-column">
+          <div class="form-row">
+            <label for="datetwo">تاريخ الاستئجار :</label>
+            <input id="datetwo" class="datetwo" type="date" name="datetwo" placeholder="تاريخ الاستئجار" required />
+          </div>
+          <div class="form-row">
+            <label for="number">رقم الهاتف :</label>
+            <input id="number" class="number" type="tel" name="number" placeholder="رقم الهاتف" required />
+          </div>
+        </div>
+        <div class="form-column">
+          <div class="form-row">
+            <label for="time">وقت الدخول :</label>
+            <select id="time" class="time" name="time" required>
+              <option value="10:00">10 صباحًا</option>
+              <option value="22:00">10 مساءً</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <label for="timetwo">وقت الخروج :</label>
+            <select id="timetwo" class="timetwo" name="timetwo" required>
+              <option value="9:00">9 صباحًا</option>
+              <option value="21:00">9 مساءً</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-column">
+          <div class="form-row">
+            <label for="deposit">العربون :</label>
+            <input id="deposit" class="deposit" type="tel" name="deposit" placeholder="العربون" required />
+          </div>
+          <div class="form-row">
+            <label for="rent">الايجار :</label>
+            <input id="rent" class="rent" type="tel" name="rent" placeholder="الايجار" required />
+          </div>
+        </div>
         <button type="submit">اضافة</button>
       </form>
       <div class="month-button">
@@ -75,15 +90,15 @@
     </div>
     <div class="boxes">
       <div class="color-boxes">
-        <div class="color-box" style="background-color: #E9F063"></div>
+        <div class="color-box" style="background-color: #FFC95F"></div>
         <p>&nbsp; - &nbsp;حجز نص يوم الا اذا كان في يوم ازرق بنفس التاريخ بكون هذا اليوم الثاني</p>
       </div>
       <div class="color-boxes">
-        <div class="color-box" style="background-color: #99E575;"></div>
+        <div class="color-box" style="background-color: #B5C99A;"></div>
         <p>&nbsp; - &nbsp;محجوز يوم كامل</p>
       </div>
       <div class="color-boxes">
-        <div class="color-box" style="background-color: #5DADE2;"></div>
+        <div class="color-box" style="background-color: #63b8d4;"></div>
         <p>&nbsp; - &nbsp;كان محجوز نص يوم وصار يوم كامل</p>
       </div>
       <div class="color-boxes">
@@ -110,7 +125,7 @@
   </section>
   </main>
   <footer>
-    <p style="font-weight: bold;">By <a href="https://www.facebook.com/nedaapark">Nedaa Park</a></p>
+    <p style="font-weight: bold; color: #F4F5F4;">By <a style="color: #F4F5F4;" href="https://www.facebook.com/nedaapark">Nedaa Park</a></p>
   </footer>
   <script src="main.js"></script>
 </body>

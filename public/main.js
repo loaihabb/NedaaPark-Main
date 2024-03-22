@@ -281,11 +281,11 @@ addForm.addEventListener("submit", async (event) => {
       sameDayAppointments.get(currentDate).push(appointment);
 
       if (sameDayAppointments.get(currentDate).length > 1) {
-        backgroundColor = "#5DADE2"; // İki randevu olduğunda mavi yap
+        backgroundColor = "#63b8d4"; // İki randevu olduğunda mavi yap
       } else if (hoursDiff > 11 || hoursDiff === 23) {
-        backgroundColor = "#99E575"; // Yeşil
+        backgroundColor = "#B5C99A"; // Yeşil
       } else {
-        backgroundColor = "#E9F063"; // Sarı
+        backgroundColor = "#FFC95F"; // Sarı
       }
 
       appointmentDiv.style.backgroundColor = backgroundColor;
@@ -392,17 +392,17 @@ async function updateCalendar(selectedMonth) {
         );
       });
 
-      let backgroundColor = "";
-
+      let backgroundColor = "#D6DAC8";
+      
       if (appointmentsOnDay.length > 0) {
         const hoursDiff = calculateHoursDiff(appointmentsOnDay[0]);
-
+        
         if (appointmentsOnDay.length > 1) {
-          backgroundColor = "#5DADE2"; // İki randevu olduğunda mavi yap
+          backgroundColor = "#63b8d4"; // İki randevu olduğunda mavi yap
         } else if (hoursDiff > 11) {
-          backgroundColor = "#99E575"; // Yeşil
+          backgroundColor = "#B5C99A"; // Yeşil
         } else {
-          backgroundColor = "#E9F063"; // Sarı
+          backgroundColor = "#FFC95F"; // Sarı
         }
       }
 
