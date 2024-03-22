@@ -465,7 +465,7 @@ footer {
     width: 100%; /* Genişlik tam ekran olacak şekilde ayarla */
   }
   input[type="date"] {
-    padding: 12px; /* Tarih alanı için padding değerini artır */
+    padding: 14px 30px; /* Tarih alanı için padding değerini artır */
     font-size: 16px; /* Yazı boyutunu artır */
     border-radius: 10px;
     border: 1px solid #ccc;
