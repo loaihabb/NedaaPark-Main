@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
   const addForm = document.getElementById("add-form");
   const appointmentList = document.getElementById("appointment-list");
   const dateoneInput = document.getElementById("dateone");
@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const currentMonth = today.getMonth() + 1; // JavaScript'te aylar 0-11 arasında olduğu için +1 ekliyoruz
   const selectedMonth = parseInt(currentMonth) - 1; // Seçilen ayı al ve 0-11 aralığına çevir
   updateAppointmentList(selectedMonth)
-  updateTotal(selectedMonth);
+  await updateTotal(selectedMonth);
   updateCalendar(selectedMonth);
 
   timeInput.innerHTML = timeOptions.map(option => `<option value="${option}">${option}</option>`).join("");
@@ -403,7 +403,7 @@ async function updateCalendar(selectedMonth) {
         if (appointmentsOnDay.length > 1) {
           backgroundColor = "#63b8d4"; // İki randevu olduğunda mavi yap
         } else if (hoursDiff > 11) {
-          backgroundColor = "#B5C99A"; // Yeşil
+          backgroundColor = "#95b66a"; // Yeşil
         } else {
           backgroundColor = "#FFC95F"; // Sarı
         }
