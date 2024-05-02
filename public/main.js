@@ -21,12 +21,13 @@ document.addEventListener("DOMContentLoaded", async () => {
   
   const today = new Date();
   const currentMonth = today.getMonth() + 1; // JavaScript'te aylar 0-11 arasında olduğu için +1 ekliyoruz
+  const currentYear = today.getFullYear();
   const selectedMonth = parseInt(currentMonth) - 1; // Seçilen ayı al ve 0-11 aralığına çevir
   monthSelect.value = selectedMonth + 1;
 
   updateAppointmentList(selectedMonth)
   await updateTotal(selectedMonth);
-  updateCalendar(selectedMonth);
+  updateCalendar(selectedMonth, currentYear);
 
   timeInput.innerHTML = timeOptions.map(option => `<option value="${option}">${option}</option>`).join("");
   timetwoInput.innerHTML = timetwoOptions.map(option => `<option value="${option}">${option}</option>`).join("");
@@ -37,9 +38,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   monthSelect.addEventListener("change", async () => {
     const selectedMonth = parseInt(monthSelect.value) - 1; // Seçilen ayı al ve 0-11 aralığına çevir
-  await updateAppointmentList(selectedMonth);
-  await updateTotal(selectedMonth);
-  await updateCalendar(selectedMonth);
+  await updateAppointmentList(selectedMonth, currentYear);
+  await updateTotal(selectedMonth, currentYear);
+  await updateCalendar(selectedMonth, currentYear);
 });
 
   dateoneInput.addEventListener("change", () => {
@@ -248,7 +249,7 @@ addForm.addEventListener("submit", async (event) => {
 });
 
 
-  async function updateAppointmentList(selectedMonth) {
+  async function updateAppointmentList(selectedMonth, currentYear) {
     appointmentList.innerHTML = "";
 
     // Verileri sunucudan al
@@ -263,7 +264,7 @@ addForm.addEventListener("submit", async (event) => {
     appointments.forEach((appointment, index) => {
       const appointmentDate = new Date(appointment.datetwo);
     
-      if (appointmentDate.getMonth() === selectedMonth) {
+      if (appointmentDate.getMonth() === selectedMonth && appointmentDate.getFullYear() === currentYear) {
 
       const appointmentDiv = document.createElement("div");
       appointmentDiv.className = "appointment";
@@ -343,7 +344,7 @@ addForm.addEventListener("submit", async (event) => {
   updateAppointmentList();
 });
 
-async function updateTotal(selectedMonth) {
+async function updateTotal(selectedMonth, currentYear) {
   const totalRentSpan = document.getElementById("total-amount");
   const totalDepositSpan = document.getElementById("total-deposit-amount"); // Değiştirildi
   const VERCEL_API = "https://nedaa-park-server.vercel.app"
@@ -351,9 +352,13 @@ async function updateTotal(selectedMonth) {
     .then((response) => response.json())
     .then((data) => {
       //console.log("Total : " , data)
-      const filteredData = data.filter(appointment =>
-        new Date(appointment.datetwo).getMonth() === selectedMonth
-      );
+      const filteredData = data.filter((appointment) => {
+        const appointmentDate = new Date(appointment.datetwo);
+        return (
+          appointmentDate.getMonth() === selectedMonth &&
+          appointmentDate.getFullYear() === currentYear // Geçerli yılı kontrol et
+        );
+      });
 
       const totalRent = filteredData.reduce((sum, appointment) => {
         return sum + (appointment.rent || 0);
