@@ -25,8 +25,9 @@ document.addEventListener("DOMContentLoaded", async () => {
   const selectedMonth = parseInt(currentMonth) - 1; // Seçilen ayı al ve 0-11 aralığına çevir
   monthSelect.value = selectedMonth + 1;
 
-  updateAppointmentList(selectedMonth)
-  await updateTotal(selectedMonth);
+  
+  updateAppointmentList(selectedMonth, currentYear)
+  updateTotal(selectedMonth, currentYear);
   updateCalendar(selectedMonth, currentYear);
 
   timeInput.innerHTML = timeOptions.map(option => `<option value="${option}">${option}</option>`).join("");
@@ -114,9 +115,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (isReverseSort) {
       isReverseSort = false;
       isNormalSort = false;
-      sortAppointments(selectedMonth);
-      updateAppointmentList(selectedMonth);
-      updateCalendar(selectedMonth);
+      sortAppointments(selectedMonth, currentYear);
+      updateAppointmentList(selectedMonth, currentYear);
+      updateCalendar(selectedMonth, currentYear);
     }
   });
 
@@ -124,18 +125,18 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (!isReverseSort) {
       isReverseSort = true;
       isNormalSort = false;
-      sortAppointments(selectedMonth);
-      updateAppointmentList(selectedMonth);
-      updateCalendar(selectedMonth);
+      sortAppointments(selectedMonth, currentYear);
+      updateAppointmentList(selectedMonth, currentYear);
+      updateCalendar(selectedMonth, currentYear);
     }
   });
 
   sortNormalButton.addEventListener("click", () => {
   isNormalSort = true;
   isReverseSort = false;
-  sortNormalAppointments(selectedMonth);
-  updateAppointmentList(selectedMonth);
-  updateCalendar(selectedMonth);
+  sortNormalAppointments(selectedMonth, currentYear);
+  updateAppointmentList(selectedMonth, currentYear);
+  updateCalendar(selectedMonth, currentYear);
 });
 
   
@@ -216,7 +217,7 @@ addForm.addEventListener("submit", async (event) => {
     !appointment.deposit ||
     !appointment.rent
   ) {
-    console.error("Eksik alanlar var");
+    console.error("عبي كل المعلومات");
     return;
   }
 
@@ -257,7 +258,7 @@ addForm.addEventListener("submit", async (event) => {
     const data = await response.json();
     appointments.length = 0;
     appointments.push(...data);
-    sortAppointments(selectedMonth);
+    sortAppointments(selectedMonth, currentYear);
 
     const sameDayAppointments = new Map(); // Aynı gün içindeki randevuları saklamak için harita
 
@@ -310,8 +311,9 @@ addForm.addEventListener("submit", async (event) => {
         .querySelector(".remove-button")
         .addEventListener("click", async (event) => {
           const idToDelete = event.target.getAttribute("data-id");
-
+          const confirmDelete = confirm("متأكد بدك تحذف الحجز؟");
           // Veriyi sunucudan sil ve MongoDB'den de kaldır
+          if (confirmDelete) {
           const deleteResponse = await fetch(
             `${VERCEL_API}/api/appointments/${idToDelete}`,
             {
@@ -321,9 +323,11 @@ addForm.addEventListener("submit", async (event) => {
 
           if (deleteResponse.ok) {
             appointments.splice(index, 1);
-            updateAppointmentList(selectedMonth);
-            updateCalendar(selectedMonth);
-            updateTotal(selectedMonth);
+            updateAppointmentList(selectedMonth, currentYear);
+            updateCalendar(selectedMonth, currentYear);
+            updateTotal(selectedMonth, currentYear);
+          }} else {
+            console.log("Silme işlemi iptal edildi.");
           }
         });
       appointmentList.appendChild(appointmentDiv);
@@ -331,17 +335,18 @@ addForm.addEventListener("submit", async (event) => {
     });
   }
 
-  function clearInputs() {
-    dateoneInput.value = "";
+  
+    //dateoneInput.value = "";
     nameInput.value = "";
-    datetwoInput.value = "";
+    //datetwoInput.value = "";
     timeInput.value = "";
     timetwoInput.value = "";
     numberInput.value = "";
     depositInput.value = "";
     rentInput.value = "";
-  }
-  updateAppointmentList();
+  
+  
+  updateAppointmentList(currentMonth, currentYear);
 });
 
 async function updateTotal(selectedMonth, currentYear) {
@@ -375,7 +380,7 @@ async function updateTotal(selectedMonth, currentYear) {
       console.error("Veriler getirilemedi:", error);
     });
 }
-updateTotal(selectedMonth);  
+updateTotal();  
 
 async function updateCalendar(selectedMonth) {
   const calendar = document.querySelector(".calendar");
