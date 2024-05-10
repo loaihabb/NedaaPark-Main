@@ -369,14 +369,12 @@ footer {
   }
 
   .modal {
-      position: fixed;
+      position: relative;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      width: 90%;
-      max-width: 90vw;
-      height: 90%;
-      max-height: 90vh;
+      width: 70%;
+      height: 80%;
       padding: 10px;
       gap: 5px;
       grid-template-columns: repeat(1, 3fr);
