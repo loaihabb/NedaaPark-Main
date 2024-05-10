@@ -314,7 +314,6 @@ addForm.addEventListener("submit", async (event) => {
         const idToEdit = event.target.getAttribute("data-id");
         const overlay = document.createElement("div");
         overlay.className = "overlay";
-        modal.style.display = "block";
         document.body.appendChild(overlay);
         
     
@@ -327,6 +326,7 @@ addForm.addEventListener("submit", async (event) => {
             
             const modal = document.createElement("div");
             modal.className = "modal";
+            modal.style.display = "block";
             modal.innerHTML = `
             <div class="appointmentToEditName">
               <h4>تعديل حجز ${appointmentToEdit.name}</h4>
