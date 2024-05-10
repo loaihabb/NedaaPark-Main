@@ -306,8 +306,9 @@ addForm.addEventListener("submit", async (event) => {
         <p>وقت الدخول : <strong>${appointment.time}</strong></p>
         <p>اسم المستأجر : <strong>${appointment.name}</strong></p>
         <button class="remove-button" data-id="${appointment._id}">حذف</button>
-        <button class="edit-button" data-id="${appointment._id}">تعديل</button>
+        
       `;
+      //* EDIT BUTTON : <button class="edit-button" data-id="${appointment._id}">تعديل</button>
       appointmentDiv
       .querySelector(".edit-button")
       .addEventListener("click", async (event) => {
@@ -326,7 +327,6 @@ addForm.addEventListener("submit", async (event) => {
             
             const modal = document.createElement("div");
             modal.className = "modal";
-            modal.style.display = "block";
             modal.innerHTML = `
             <div class="appointmentToEditName">
               <h4>تعديل حجز ${appointmentToEdit.name}</h4>
