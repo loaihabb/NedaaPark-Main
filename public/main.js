@@ -314,6 +314,7 @@ addForm.addEventListener("submit", async (event) => {
         const idToEdit = event.target.getAttribute("data-id");
         const overlay = document.createElement("div");
         overlay.className = "overlay";
+        modal.style.display = "block";
         document.body.appendChild(overlay);
         
     

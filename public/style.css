@@ -36,7 +36,8 @@ body {
   border: 1px solid #ccc;
   z-index: 1001;
   border-radius: 3%;
-  overflow-y: auto
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .appointmentToEditName{
