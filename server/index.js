@@ -139,6 +139,36 @@ app.delete('/api/appointments/:id', async (req, res) => {
   }
 });
 
+//* Edit an Object
+app.put('/api/appointments/:id', async (req, res) => {
+  const { id } = req.params;
+  const appointmentDetails  = req.body;
+  
+  try {    
+    const updatedAppointment = await Appointment.findByIdAndUpdate(id, appointmentDetails, { new: true });
+    if (!updatedAppointment) {
+      return res.status(404).json({ error: 'Appointment not found' });
+    }
+
+    res.json({ message: 'Appointment updated successfully', updatedAppointment });
+  } catch (error) {
+    console.error('Veri güncellenemedi:', error);
+    res.status(500).json({ error: 'Error updating appointment' });
+  }
+});
+
+//* Get one Object
+app.get('/api/appointments/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    const appointment = await Appointment.findById(id);
+    res.json(appointment);
+  } catch (error) {
+    console.error('Veriler getirilemedi:', error);
+    res.status(500).json({ error: 'Error fetching appointments' });
+  }
+});
+
 app.listen(port, () => {
   console.log(`Listening on port ${port}`);
 });
