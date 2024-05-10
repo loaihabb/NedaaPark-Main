@@ -361,18 +361,22 @@ footer {
 
 @media (max-width: 867px) {
   .overlay {
+    position: fixed;
+    top: 50%;
+    left: 50%;
     background-color: rgba(0, 0, 0, 0.6);
     filter: blur(5px);
-    z-index: -1;
+    z-index: 999;
   }
   .modal h2, span{
     font-size: medium;
   }
 
   .modal {
-      display: grid;
-      grid-template-columns: 1fr;
-      place-items: center;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
       width: 70%;
       height: 80%;
       padding: 10px;
