@@ -384,6 +384,7 @@ footer {
       padding: 10px;
       gap: 5px;
       grid-template-columns: repeat(1, 3fr);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Gölge efekti ekler */
       overflow-y: auto;
       overflow-x: hidden;
       z-index: 999;
@@ -570,6 +571,7 @@ footer {
       overflow-x: hidden;
       z-index: 999;
       border-radius: 3%;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Gölge efekti ekler */
       
     }
    .modal input {
