@@ -370,10 +370,9 @@ footer {
   }
 
   .modal {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
+      display: grid;
+      grid-template-columns: 1fr;
+      place-items: center;
       width: 70%;
       height: 80%;
       padding: 10px;
