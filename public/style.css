@@ -363,13 +363,14 @@ footer {
   .overlay {
     background-color: rgba(0, 0, 0, 0.6);
     filter: blur(5px);
+    z-index: -1;
   }
   .modal h2, span{
     font-size: medium;
   }
 
   .modal {
-      position: relative;
+      position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
