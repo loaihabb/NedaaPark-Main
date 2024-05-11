@@ -4,6 +4,7 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const app = express();
 const port = 3000;
+require('dotenv').config();
 
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -11,7 +12,7 @@ app.use(express.static('public')); // Assuming your static files are in a 'publi
 app.use(express.json());
 
 
-mongoose.connect('mongodb+srv://Loiy:12345@nedaa.dnlqzqp.mongodb.net/?retryWrites=true&w=majority', {
+mongoose.connect(process.env.DB_HOST, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 }).then(console.log("Mongodb connected"));
