@@ -1,4 +1,3 @@
-require('dotenv').config();
 document.addEventListener("DOMContentLoaded", async () => {
   const addForm = document.getElementById("add-form");
   const appointmentList = document.getElementById("appointment-list");
@@ -17,8 +16,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   const timeOptions = ["10:00", "22:00"];
   const timetwoOptions = ["9:00", "21:00"];
   const appointments = [];
-
-  const VERCEL_API = process.env.VERCEL_API
   
   const today = new Date();
   const currentMonth = today.getMonth() + 1; // JavaScript'te aylar 0-11 arasında olduğu için +1 ekliyoruz
