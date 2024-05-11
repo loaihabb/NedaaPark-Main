@@ -17,8 +17,8 @@ document.addEventListener("DOMContentLoaded", async () => {
   const timetwoOptions = ["9:00", "21:00"];
   const appointments = [];
 
-  const VERCEL_API = process.env.VERCEL_API;
-    
+  const VERCEL_API = VERCEL_API;
+  
   const today = new Date();
   const currentMonth = today.getMonth() + 1; // JavaScript'te aylar 0-11 arasında olduğu için +1 ekliyoruz
   const currentYear = today.getFullYear();
