@@ -428,7 +428,6 @@ addForm.addEventListener("submit", async (event) => {
     });
   }
 
-  
     //dateoneInput.value = "";
     nameInput.value = "";
     //datetwoInput.value = "";
