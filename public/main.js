@@ -1,3 +1,4 @@
+require('dotenv').config();
 document.addEventListener("DOMContentLoaded", async () => {
   const addForm = document.getElementById("add-form");
   const appointmentList = document.getElementById("appointment-list");
@@ -17,7 +18,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const timetwoOptions = ["9:00", "21:00"];
   const appointments = [];
 
-  const VERCEL_API = "https://nedaa-park-server.vercel.app"
+  const VERCEL_API = process.env.VERCEL_API
   
   const today = new Date();
   const currentMonth = today.getMonth() + 1; // JavaScript'te aylar 0-11 arasında olduğu için +1 ekliyoruz
@@ -444,7 +445,7 @@ addForm.addEventListener("submit", async (event) => {
 async function updateTotal(selectedMonth, currentYear) {
   const totalRentSpan = document.getElementById("total-amount");
   const totalDepositSpan = document.getElementById("total-deposit-amount"); // Değiştirildi
-  const VERCEL_API = "https://nedaa-park-server.vercel.app"
+  const VERCEL_API = process.env.VERCEL_API
   fetch(`${VERCEL_API}/api/appointments`)
     .then((response) => response.json())
     .then((data) => {
@@ -481,7 +482,7 @@ async function updateCalendar(selectedMonth) {
   const daysInMonth = new Date(currentYear, selectedMonth + 1, 0).getDate(); // Ayın gün sayısını al
 
   try {
-    const VERCEL_API = "https://nedaa-park-server.vercel.app"
+    const VERCEL_API = process.env.VERCEL_API
     const response = await fetch(`${VERCEL_API}/api/appointments`);
     const data = await response.json();
     //console.log("Calendar : " , data)
