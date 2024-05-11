@@ -392,7 +392,8 @@ footer {
       border-radius: 3%;
 
     }
-   .modal input {
+   .modal input,
+   .modal select {
     width: 90%;
     box-sizing: border-box;
   } 
@@ -575,7 +576,8 @@ footer {
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Gölge efekti ekler */
       
     }
-   .modal input {
+   .modal input,
+   .modal select {
     width: 90%;
     box-sizing: border-box;
   } 
