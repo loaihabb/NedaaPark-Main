@@ -306,98 +306,98 @@ addForm.addEventListener("submit", async (event) => {
         <p>وقت الدخول : <strong>${appointment.time}</strong></p>
         <p>اسم المستأجر : <strong>${appointment.name}</strong></p>
         <button class="remove-button" data-id="${appointment._id}">حذف</button>
-        
+        <button class="edit-button" data-id="${appointment._id}">تعديل</button>
       `;
-      //* EDIT BUTTON : <button class="edit-button" data-id="${appointment._id}">تعديل</button>
-      // appointmentDiv
-      // .querySelector(".edit-button")
-      // .addEventListener("click", async (event) => {
-      //   const idToEdit = event.target.getAttribute("data-id");
-      //   const overlay = document.createElement("div");
-      //   overlay.className = "overlay";
-      //   document.body.appendChild(overlay);
+      
+      appointmentDiv
+      .querySelector(".edit-button")
+      .addEventListener("click", async (event) => {
+        const idToEdit = event.target.getAttribute("data-id");
+        const overlay = document.createElement("div");
+        overlay.className = "overlay";
+        document.body.appendChild(overlay);
         
     
-      //   if (idToEdit) {
-      //     const response = await fetch(`http://localhost:3000/api/appointments/${idToEdit}`);
-      //     const appointmentToEdit = await response.json();
+        if (idToEdit) {
+          const response = await fetch(`${VERCEL_API}/api/appointments/${idToEdit}`);
+          const appointmentToEdit = await response.json();
     
-      //     if (response.ok) {
-      //       // Edit modalını aç
+          if (response.ok) {
+            // Edit modalını aç
             
-      //       const modal = document.createElement("div");
-      //       modal.className = "modal";
-      //       modal.innerHTML = `
-      //       <div class="appointmentToEditName">
-      //         <h4>تعديل حجز ${appointmentToEdit.name}</h4>
-      //       </div>
-      //       <br>
-      //         <span>اسم المستأجر : <input type="text" id="edit-name" value="${appointmentToEdit.name}"></span>
-      //         <span>تاريخ تسجيل الموعد : <input type="date" id="edit-dateone" value="${appointmentToEdit.dateone}"></span>
-      //         <span>تاريخ الايجار : <input type="date" id="edit-datetwo" value="${appointmentToEdit.datetwo}"></span>
-      //         <span>وقت الدخول : <select id="edit-time">
-      //         ${timeOptions.map(option => `<option value="${option}">${option}</option>`).join("")}
-      //         </select></span>
-      //         <span>وقت الخروج : <select id="edit-timetwo">
-      //         ${timetwoOptions.map(option => `<option value="${option}">${option}</option>`).join("")}
-      //         </select></span>
-      //         <span>رقم الهاتف : <input type="text" id="edit-number" value="${appointmentToEdit.number}"></span>
-      //         <span>العربون : <input type="text" id="edit-deposit" value="${appointmentToEdit.deposit}"></span>
-      //         <span>الايجار : <input type="text" id="edit-rent" value="${appointmentToEdit.rent}"></span>
-      //         <br>
-      //         <div class="appointmentToEditButtons">
-      //         <button id="save-button" class="save-button">حفظ</button>
-      //         <button id="close-button" class="cancel-button">الغاء</button>
-      //         </div>
-      //       `;
-      //       document.body.appendChild(modal);
+            const modal = document.createElement("div");
+            modal.className = "modal";
+            modal.innerHTML = `
+            <div class="appointmentToEditName">
+              <h4>تعديل حجز ${appointmentToEdit.name}</h4>
+            </div>
+            <br>
+              <span>اسم المستأجر : <input type="text" id="edit-name" value="${appointmentToEdit.name}"></span>
+              <span>تاريخ تسجيل الموعد : <input type="date" id="edit-dateone" value="${appointmentToEdit.dateone}"></span>
+              <span>تاريخ الايجار : <input type="date" id="edit-datetwo" value="${appointmentToEdit.datetwo}"></span>
+              <span>وقت الدخول : <select id="edit-time">
+              ${timeOptions.map(option => `<option value="${option}">${option}</option>`).join("")}
+              </select></span>
+              <span>وقت الخروج : <select id="edit-timetwo">
+              ${timetwoOptions.map(option => `<option value="${option}">${option}</option>`).join("")}
+              </select></span>
+              <span>رقم الهاتف : <input type="text" id="edit-number" value="${appointmentToEdit.number}"></span>
+              <span>العربون : <input type="text" id="edit-deposit" value="${appointmentToEdit.deposit}"></span>
+              <span>الايجار : <input type="text" id="edit-rent" value="${appointmentToEdit.rent}"></span>
+              <br>
+              <div class="appointmentToEditButtons">
+              <button id="save-button" class="save-button">حفظ</button>
+              <button id="close-button" class="cancel-button">الغاء</button>
+              </div>
+            `;
+            document.body.appendChild(modal);
     
-      //       // Kaydet butonuna tıklandığında güncelleme işlemini gerçekleştir
-      //       document.getElementById("save-button").addEventListener("click", async () => {
-      //         const overlay = document.querySelector(".overlay");
-      //         overlay.remove();
-      //         const updatedAppointment = {
-      //           name: document.getElementById("edit-name").value,
-      //           dateone: document.getElementById("edit-dateone").value,
-      //           datetwo: document.getElementById("edit-datetwo").value,
-      //           time: document.getElementById("edit-time").value,
-      //           timetwo: document.getElementById("edit-timetwo").value,
-      //           deposit: document.getElementById("edit-deposit").value,
-      //           rent: document.getElementById("edit-rent").value,
-      //           number: document.getElementById("edit-number").value
-      //         };
+            // Kaydet butonuna tıklandığında güncelleme işlemini gerçekleştir
+            document.getElementById("save-button").addEventListener("click", async () => {
+              const overlay = document.querySelector(".overlay");
+              overlay.remove();
+              const updatedAppointment = {
+                name: document.getElementById("edit-name").value,
+                dateone: document.getElementById("edit-dateone").value,
+                datetwo: document.getElementById("edit-datetwo").value,
+                time: document.getElementById("edit-time").value,
+                timetwo: document.getElementById("edit-timetwo").value,
+                deposit: document.getElementById("edit-deposit").value,
+                rent: document.getElementById("edit-rent").value,
+                number: document.getElementById("edit-number").value
+              };
     
-      //         const updateResponse = await fetch(`http://localhost:3000/api/appointments/${idToEdit}`, {
-      //           method: "PUT",
-      //           headers: {
-      //             "Content-Type": "application/json"
-      //           },
-      //           body: JSON.stringify(updatedAppointment)
-      //         });
+              const updateResponse = await fetch(`${VERCEL_API}/api/appointments/${idToEdit}`, {
+                method: "PUT",
+                headers: {
+                  "Content-Type": "application/json"
+                },
+                body: JSON.stringify(updatedAppointment)
+              });
     
-      //         if (updateResponse.ok) {
-      //           // Düzenleme işlemi başarılı olduğunda modalı kapat ve sayfayı yenile
-      //             modal.remove();
-      //             updateAppointmentList(selectedMonth, currentYear);
-      //         } else {
-      //           console.log("Randevu güncellenemedi.");
-      //         }
+              if (updateResponse.ok) {
+                // Düzenleme işlemi başarılı olduğunda modalı kapat ve sayfayı yenile
+                  modal.remove();
+                  updateAppointmentList(selectedMonth, currentYear);
+              } else {
+                console.log("Randevu güncellenemedi.");
+              }
               
-      //       }
+            }
             
-      //     );
-      //     document.getElementById("close-button").addEventListener("click", async () => {
-      //       const overlay = document.querySelector(".overlay");
-      //       overlay.remove(); 
-      //       modal.remove();
-      //     }          
-      //   );
-      //     } else {
-      //       console.log("Randevu getirilemedi.");
-      //     }
-      //   }
+          );
+          document.getElementById("close-button").addEventListener("click", async () => {
+            const overlay = document.querySelector(".overlay");
+            overlay.remove(); 
+            modal.remove();
+          }          
+        );
+          } else {
+            console.log("Randevu getirilemedi.");
+          }
+        }
         
-      // });
+      });
     
       appointmentDiv
         .querySelector(".remove-button")
