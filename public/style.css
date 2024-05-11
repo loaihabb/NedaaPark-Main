@@ -393,7 +393,7 @@ footer {
 
     }
    .modal input {
-    width: 90%;
+    width: 80%;
     box-sizing: border-box;
   } 
   .appointmentToEditName{
@@ -576,7 +576,7 @@ footer {
       
     }
    .modal input {
-    width: 100%;
+    width: 80%;
     box-sizing: border-box;
   } 
   .appointmentToEditName{
