@@ -443,7 +443,7 @@ addForm.addEventListener("submit", async (event) => {
 async function updateTotal(selectedMonth, currentYear) {
   const totalRentSpan = document.getElementById("total-amount");
   const totalDepositSpan = document.getElementById("total-deposit-amount"); // Değiştirildi
-  const VERCEL_API = process.env.VERCEL_API
+  const VERCEL_API = "https://nedaa-park-server.vercel.app"
   fetch(`${VERCEL_API}/api/appointments`)
     .then((response) => response.json())
     .then((data) => {
@@ -480,7 +480,7 @@ async function updateCalendar(selectedMonth) {
   const daysInMonth = new Date(currentYear, selectedMonth + 1, 0).getDate(); // Ayın gün sayısını al
 
   try {
-    const VERCEL_API = process.env.VERCEL_API
+    const VERCEL_API = "https://nedaa-park-server.vercel.app"
     const response = await fetch(`${VERCEL_API}/api/appointments`);
     const data = await response.json();
     //console.log("Calendar : " , data)
