@@ -425,6 +425,15 @@ addForm.addEventListener("submit", async (event) => {
       appointmentList.appendChild(appointmentDiv);
       }
     });
+    document.addEventListener("click", function(event) {
+      const overlay = document.querySelector(".overlay");
+      const modal = document.querySelector(".modal");
+      // Eğer tıklanan öğe overlay ise veya overlay'in içinde bulunmuyorsa modal ve overlay'i kapat
+      if (event.target === overlay || !modal.contains(event.target)) {
+        overlay.remove();
+        modal.remove();
+      }
+    });
   }
 
     //dateoneInput.value = "";
