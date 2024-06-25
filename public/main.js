@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const VERCEL_API = "https://nedaa-park-server.vercel.app"
   
   const today = new Date();
-  const currentMonth = today.getMonth() + 1; // JavaScript'te aylar 0-11 arasında olduğu için +1 ekliyoruz
+  const currentMonth = today.getMonth(); // JavaScript'te aylar 0-11 arasında olduğu için +1 ekliyoruz
   const currentYear = today.getFullYear();
   const selectedMonth = parseInt(currentMonth) - 1; // Seçilen ayı al ve 0-11 aralığına çevir
   monthSelect.value = selectedMonth + 1;
