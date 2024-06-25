@@ -446,7 +446,7 @@ addForm.addEventListener("submit", async (event) => {
     rentInput.value = "";
   
   
-  updateAppointmentList(currentMonth, currentYear);
+  //updateAppointmentList(currentMonth, currentYear);
 });
 
 async function updateTotal(selectedMonth, currentYear) {
