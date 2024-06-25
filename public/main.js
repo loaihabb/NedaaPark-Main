@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   monthSelect.value = selectedMonth + 1;
 
   
-  //updateAppointmentList(selectedMonth, currentYear)
+  updateAppointmentList(selectedMonth, currentYear)
   updateTotal(selectedMonth, currentYear);
   updateCalendar(selectedMonth, currentYear);
 
