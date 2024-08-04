@@ -33,9 +33,11 @@ document.addEventListener("DOMContentLoaded", async () => {
   timeInput.innerHTML = timeOptions.map(option => `<option value="${option}">${option}</option>`).join("");
   timetwoInput.innerHTML = timetwoOptions.map(option => `<option value="${option}">${option}</option>`).join("");
 
-  const currentDate = today.toISOString().split('T')[0];
-  dateoneInput.value = currentDate;
-  datetwoInput.value = currentDate;
+  const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+  const todayFormatted = today.toLocaleDateString('tr-TR', options).split('.').reverse().join('-'); // Türkiye formatından YYYY-MM-DD'ye dönüştür
+
+  dateoneInput.value = todayFormatted;
+  datetwoInput.value = todayFormatted;
 
   monthSelect.addEventListener("change", async () => {
     const selectedMonth = parseInt(monthSelect.value) - 1; // Seçilen ayı al ve 0-11 aralığına çevir
@@ -480,7 +482,7 @@ async function updateTotal(selectedMonth, currentYear) {
       console.error("Veriler getirilemedi:", error);
     });
 }
-updateTotal();  
+
 
 async function updateCalendar(selectedMonth) {
   const calendar = document.querySelector(".calendar");
