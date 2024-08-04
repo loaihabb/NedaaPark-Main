@@ -28,6 +28,7 @@ body {
   position: fixed;
   top: 50%;
   left: 50%;
+  transform: translate(-50%, -50%);
   width: 40%;
   height: 70%;
   background-color: #909d84;
@@ -43,11 +44,13 @@ body {
   position: relative;
   top: 50%;
   left: 0%;
+  transform: translate(-50%, -50%);
 }
 .appointmentToEditButtons{
   position: relative;
   top: 50%;
   left: 100%;
+  transform: translate(-50%, -50%);
 }
 
 h1 {
@@ -82,6 +85,7 @@ button {
 
 button:hover {
   background-color: #a58666;
+  transform: scale(1.1);
 }
 
 
@@ -190,30 +194,41 @@ button[type="submit"]:hover {
   transition: 0.7s ease;
 }
 
+.appointment:hover {
+  transform: scale(1.02);
+}
 
+.appointment p {
+  transition: 0.7s ease;
+}
 
-
-
-
+.appointment p:hover {
+  transform: scale(1.1);
+}
 
 .remove-button {
   background-color: #de6f6f;
+  transition: 0.7s ease;
 }
 .remove-button:hover {
   background-color: #d32f2f;
+  transform: scale(1.1);
 }
 .save-button{
   background-color: #55663e;
+  transition: 0.7s ease;
 }
 .save-button:hover{
   background-color: #3c4c27;
+  transform: scale(1.1);
 }
 .cancel-button{
   background-color: #d32f2f;
-
+  transition: 0.7s ease;
 }
 .cancel-button:hover{
   background-color: #d32f2f;
+  transform: scale(1.1);
 }
 
 .total {
@@ -377,6 +392,7 @@ footer {
       position: fixed;
       top: 50%;
       left: 50%;
+      transform: translate(-50%, -50%);
       width: 70%;
       height: 80%;
       padding: 10px;
@@ -398,11 +414,13 @@ footer {
     position: relative;
     top: 50%;
     left: 50%;
+    transform: translate(-50%, -50%);
   }
   .appointmentToEditButtons{
     position: relative;
     top: 50%;
     left: 50%;
+    transform: translate(-50%, -50%);
   }
   .save-button{
     width: 30%;
@@ -558,6 +576,7 @@ footer {
       position: fixed;
       top: 50%;
       left: 50%;
+      transform: translate(-50%, -50%);
       width: 70%;
       height: 80%;
       padding: 10px;
@@ -579,11 +598,13 @@ footer {
     position: relative;
     top: 50%;
     left: 50%;
+    transform: translate(-50%, -50%);
   }
   .appointmentToEditButtons{
     position: relative;
     top: 50%;
     left: 50%;
+    transform: translate(-50%, -50%);
   }
   .save-button{
     width: 30%;
