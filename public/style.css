@@ -78,14 +78,12 @@ button {
   border: none;
   border-radius: 10px;
   cursor: pointer;
-  transition: 0.7s ease;
   margin: 20px;
   font-size: medium;
 }
 
 button:hover {
   background-color: #a58666;
-  transform: scale(1.1);
 }
 
 
@@ -191,44 +189,26 @@ button[type="submit"]:hover {
   margin-bottom: 10px;
   direction: ltr;
   border-radius: 5px;
-  transition: 0.7s ease;
 }
 
-.appointment:hover {
-  transform: scale(1.02);
-}
-
-.appointment p {
-  transition: 0.7s ease;
-}
-
-.appointment p:hover {
-  transform: scale(1.1);
-}
 
 .remove-button {
   background-color: #de6f6f;
-  transition: 0.7s ease;
 }
 .remove-button:hover {
   background-color: #d32f2f;
-  transform: scale(1.1);
 }
 .save-button{
   background-color: #55663e;
-  transition: 0.7s ease;
 }
 .save-button:hover{
   background-color: #3c4c27;
-  transform: scale(1.1);
 }
 .cancel-button{
   background-color: #d32f2f;
-  transition: 0.7s ease;
 }
 .cancel-button:hover{
   background-color: #d32f2f;
-  transform: scale(1.1);
 }
 
 .total {
