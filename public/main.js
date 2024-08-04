@@ -488,11 +488,40 @@ async function updateCalendar(selectedMonth) {
   const currentYear = new Date().getFullYear();
   const daysInMonth = new Date(currentYear, selectedMonth + 1, 0).getDate(); // Ayın gün sayısını al
 
+  const dayNames = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"]; // Günlerin İngilizce kısaltmaları
+
+  // Günlerin kısaltmalarını gösteren satırı ekleyin
+  const dayNamesRow = document.createElement("div");
+  dayNamesRow.classList.add("day-names-row");
+
+  dayNames.forEach(dayName => {
+    const dayNameElement = document.createElement("div");
+    dayNameElement.classList.add("day-name");
+    dayNameElement.textContent = dayName;
+    dayNamesRow.appendChild(dayNameElement);
+  });
+
+  calendar.appendChild(dayNamesRow);
+
   try {
-    const VERCEL_API = "https://nedaa-park-server.vercel.app"
+    const VERCEL_API = "https://nedaa-park-server.vercel.app";
     const response = await fetch(`${VERCEL_API}/api/appointments`);
     const data = await response.json();
     //console.log("Calendar : " , data)
+
+    // İlk günün haftanın hangi gününe denk geldiğini bulun
+    const firstDayOfMonth = new Date(currentYear, selectedMonth, 1).getDay();
+
+    // Boş günlerin sayısını hesaplayın
+    let emptyDays = firstDayOfMonth;
+
+    // Boş günleri eklemeden atlayın
+    for (let i = 0; i < emptyDays; i++) {
+      const emptyElement = document.createElement("div");
+      emptyElement.classList.add("empty");
+      calendar.appendChild(emptyElement);
+    }
+
     for (let day = 1; day <= daysInMonth; day++) {
       const dayElement = document.createElement("div");
       dayElement.classList.add("day");
@@ -529,6 +558,9 @@ async function updateCalendar(selectedMonth) {
   }
 }
 updateCalendar();
+
+
+
 
 function calculateHoursDiff(appointment) {
   const startTime = parseInt(appointment.time.split(":")[0]);
