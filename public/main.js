@@ -154,44 +154,65 @@ addForm.addEventListener("submit", async (event) => {
     (appointment) => appointment.datetwo === selectedDateString
   );
 
-  if (conflictingAppointments.length > 0) {
-    const isDateAlreadyBooked = conflictingAppointments.some(
-      (appointment) => {
-        const isSameStartTime = appointment.time === selectedStartTime;
-        const isSameEndTime = appointment.timetwo === selectedEndTime;
-        const is11HoursAppointment =
-          (appointment.time === "10:00" && appointment.timetwo === "21:00") ||
-          (appointment.time === "22:00" && appointment.timetwo === "9:00");
-  
-        if (is11HoursAppointment) {
-          if (isSameStartTime || isSameEndTime) {
-            return true; // Saatler çakışıyorsa
-          } else {
-            const sameDayAppointments = appointments.filter(
-              (a) => a.datetwo === selectedDateString
-            );
-  
-            const hasAnother11HoursAppointment = sameDayAppointments.some(
-              (a) =>
-                (a.time === "10:00" && a.timetwo === "9:00") ||
-                (a.time === "22:00" && a.timetwo === "21:00")
-            );
-  
-            return hasAnother11HoursAppointment;
-          }
-        } else {
-          return (
-            (isSameStartTime && isSameEndTime) ||
-            (appointment.time === "22:00" && appointment.timetwo === "21:00") ||
-            (appointment.time === "10:00" && appointment.timetwo === "9:00")
-          );
-        }
+  // Genel randevu çakışma kontrolü
+  const isDateAlreadyBooked = conflictingAppointments.some(
+    (appointment) => {
+      const isSameStartTime = appointment.time === selectedStartTime;
+      const isSameEndTime = appointment.timetwo === selectedEndTime;
+      const is11HoursAppointment =
+        (appointment.time === "10:00" && appointment.timetwo === "21:00") ||
+        (appointment.time === "22:00" && appointment.timetwo === "09:00");
+      const is23HoursAppointment = appointment.time === "10:00" && appointment.timetwo === "9:00";
+      const isNightAppointment = appointment.time === "22:00" && appointment.timetwo === "21:00";
+
+      // 11 saatlik randevu kontrolü
+      if (is11HoursAppointment) {
+        return isSameStartTime || isSameEndTime;
       }
+
+      // 23 saatlik randevu kontrolü
+      if (is23HoursAppointment) {
+        showNotification(
+          "لا يمكن اضافة حجز , يوجد حجز كامل بهذا اليوم",
+          "error"
+        );
+        return true;
+      }
+      if (isNightAppointment) {
+        showNotification(
+          "لا يمكن اضافة حجز , يوجد حجز ليلي",
+          "error"
+        );
+        return true;
+      }
+      // Genel randevu çakışma kontrolü
+      return isSameStartTime && isSameEndTime;
+    }
+  );
+
+  if (isDateAlreadyBooked) {
+    showNotification(
+      "في حجز بنفس الوقت والتاريخ , شوف وقت ثاني.",
+      "error"
     );
-  
-    if (isDateAlreadyBooked) {
+    return;
+  }
+
+  // 22:00-21:00 arası randevuları kontrol et
+  const hasOvernightAppointment = conflictingAppointments.some(
+    (appointment) => appointment.time === "22:00" && appointment.timetwo === "21:00"
+  );
+
+  // Eğer mevcut randevular arasında 22:00-21:00 arası bir randevu varsa
+  if (hasOvernightAppointment) {
+    // İlk gün ve ikinci gün için izin verilen saat aralıkları
+    const validFirstDay = (selectedStartTime === "10:00" && selectedEndTime === "21:00");
+    const validSecondDay = (selectedStartTime === "22:00" && selectedEndTime === "09:00");
+
+    // Geçerli saat aralıkları dışında randevu eklemeyi reddet
+    if (!validFirstDay && !validSecondDay) {
       showNotification(
-        "نفس الوقت في نفس اليوم محجوز بالفعل. اختر وقتًا آخر.",
+        "في الحجز الليلي بس بتقدر تحجز من الساعة 10 الى 9 مساءًاو اليوم اللي بعده من 10 مساءً الى 9 صباحًا",
         "error"
       );
       return;
@@ -219,7 +240,7 @@ addForm.addEventListener("submit", async (event) => {
     !appointment.deposit ||
     !appointment.rent
   ) {
-    console.error("عبي كل المعلومات");
+    showNotification("عبَي كل المعلومات.", "error");
     return;
   }
 
@@ -234,40 +255,34 @@ addForm.addEventListener("submit", async (event) => {
     await response.json();
     if (response.ok) {
       appointments.push(appointment);
-      location.reload()
-      /*
-      const selectedMonth = parseInt(monthSelect.value) - 1;
-      await updateAppointmentList(selectedMonth);
-      await updateCalendar(selectedMonth);
-      await updateTotal(selectedMonth);
-      clearInputs();
-      */
+      location.reload();
     } else {
-      console.log("hata:", response.data);
-      console.error("Veri eklenemedi");
+      //console.log("Hata:", response.data);
+      showNotification("خطأ اثناء وقت الاضافة", "error");
     }
   } catch (error) {
-    console.error("Hata:", error);
+    //console.error("Hata:", error);
+    showNotification("صار في غلط معلش", "error");
   }
 });
 
 
-  async function updateAppointmentList(selectedMonth, currentYear) {
-    appointmentList.innerHTML = "";
+async function updateAppointmentList(selectedMonth, currentYear) {
+  appointmentList.innerHTML = "";
 
-    // Verileri sunucudan al
-    const response = await fetch(`${VERCEL_API}/api/appointments`);
-    const data = await response.json();
-    appointments.length = 0;
-    appointments.push(...data);
-    sortAppointments(selectedMonth, currentYear);
+  // Verileri sunucudan al
+  const response = await fetch(`${VERCEL_API}/api/appointments`);
+  const data = await response.json();
+  appointments.length = 0;
+  appointments.push(...data);
+  sortAppointments(selectedMonth, currentYear);
 
-    const sameDayAppointments = new Map(); // Aynı gün içindeki randevuları saklamak için harita
+  const sameDayAppointments = new Map(); // Aynı gün içindeki randevuları saklamak için harita
 
-    appointments.forEach((appointment, index) => {
-      const appointmentDate = new Date(appointment.datetwo);
-    
-      if (appointmentDate.getMonth() === selectedMonth && appointmentDate.getFullYear() === currentYear) {
+  appointments.forEach((appointment, index) => {
+    const appointmentDate = new Date(appointment.datetwo);
+
+    if (appointmentDate.getMonth() === selectedMonth && appointmentDate.getFullYear() === currentYear) {
 
       const appointmentDiv = document.createElement("div");
       appointmentDiv.className = "appointment";
@@ -291,12 +306,13 @@ addForm.addEventListener("submit", async (event) => {
 
       if (sameDayAppointments.get(currentDate).length > 1) {
         backgroundColor = "#63b8d4"; // İki randevu olduğunda mavi yap
+      } else if (appointment.time === "22:00" && appointment.timetwo === "21:00") {
+        backgroundColor = "#FFC0CB"; // Pembe
       } else if (hoursDiff > 11 || hoursDiff === 23) {
         backgroundColor = "#B5C99A"; // Yeşil
       } else {
         backgroundColor = "#FFC95F"; // Sarı
       }
-
       appointmentDiv.style.backgroundColor = backgroundColor;
       appointmentDiv.innerHTML = `
         <p>الايجار : <strong>${appointment.rent}</strong></p>
@@ -310,97 +326,189 @@ addForm.addEventListener("submit", async (event) => {
         <button class="remove-button" data-id="${appointment._id}">حذف</button>
         <button class="edit-button" data-id="${appointment._id}">تعديل</button>
       `;
-      
+
       appointmentDiv
-      .querySelector(".edit-button")
-      .addEventListener("click", async (event) => {
-        const idToEdit = event.target.getAttribute("data-id");
-        const overlay = document.createElement("div");
-        overlay.className = "overlay";
-        document.body.appendChild(overlay);
-        
-    
-        if (idToEdit) {
-          const response = await fetch(`${VERCEL_API}/api/appointments/${idToEdit}`);
-          const appointmentToEdit = await response.json();
-    
-          if (response.ok) {
-            // Edit modalını aç
-            
-            const modal = document.createElement("div");
-            modal.className = "modal";
-            modal.innerHTML = `
-            <div class="appointmentToEditName">
-              <h4>تعديل حجز ${appointmentToEdit.name}</h4>
-            </div>
-            <br>
-              <span>اسم المستأجر : <input type="text" id="edit-name" value="${appointmentToEdit.name}"></span>
-              <span>تاريخ تسجيل الموعد : <input type="date" id="edit-dateone" value="${appointmentToEdit.dateone}"></span>
-              <span>تاريخ الايجار : <input type="date" id="edit-datetwo" value="${appointmentToEdit.datetwo}"></span>
-              <span>وقت الدخول : <select id="edit-time">
-              ${timeOptions.map(option => `<option value="${option}">${option}</option>`).join("")}
-              </select></span>
-              <span>وقت الخروج : <select id="edit-timetwo">
-              ${timetwoOptions.map(option => `<option value="${option}">${option}</option>`).join("")}
-              </select></span>
-              <span>رقم الهاتف : <input type="text" id="edit-number" value="${appointmentToEdit.number}"></span>
-              <span>العربون : <input type="text" id="edit-deposit" value="${appointmentToEdit.deposit}"></span>
-              <span>الايجار : <input type="text" id="edit-rent" value="${appointmentToEdit.rent}"></span>
-              <br>
-              <div class="appointmentToEditButtons">
-              <button id="save-button" class="save-button">حفظ</button>
-              <button id="close-button" class="cancel-button">الغاء</button>
+        .querySelector(".edit-button")
+        .addEventListener("click", async (event) => {
+          const idToEdit = event.target.getAttribute("data-id");
+          const overlay = document.createElement("div");
+          overlay.className = "overlay";
+          document.body.appendChild(overlay);
+
+          if (idToEdit) {
+            const response = await fetch(`${VERCEL_API}/api/appointments/${idToEdit}`);
+            const appointmentToEdit = await response.json();
+
+            if (response.ok) {
+              // Edit modalını aç
+              const modal = document.createElement("div");
+              modal.className = "modal";
+              modal.innerHTML = `
+              <div class="appointmentToEditName">
+                <h4>تعديل حجز ${appointmentToEdit.name}</h4>
               </div>
-            `;
-            document.body.appendChild(modal);
-    
-            // Kaydet butonuna tıklandığında güncelleme işlemini gerçekleştir
-            document.getElementById("save-button").addEventListener("click", async () => {
-              const overlay = document.querySelector(".overlay");
-              overlay.remove();
-              const updatedAppointment = {
-                name: document.getElementById("edit-name").value,
-                dateone: document.getElementById("edit-dateone").value,
-                datetwo: document.getElementById("edit-datetwo").value,
-                time: document.getElementById("edit-time").value,
-                timetwo: document.getElementById("edit-timetwo").value,
-                deposit: document.getElementById("edit-deposit").value,
-                rent: document.getElementById("edit-rent").value,
-                number: document.getElementById("edit-number").value
-              };
-    
-              const updateResponse = await fetch(`${VERCEL_API}/api/appointments/${idToEdit}`, {
-                method: "PUT",
-                headers: {
-                  "Content-Type": "application/json"
-                },
-                body: JSON.stringify(updatedAppointment)
+              <br>
+                <span>اسم المستأجر : <input type="text" id="edit-name" value="${appointmentToEdit.name}"></span>
+                <span>تاريخ تسجيل الموعد : <input type="date" id="edit-dateone" value="${appointmentToEdit.dateone}"></span>
+                <span>تاريخ الايجار : <input type="date" id="edit-datetwo" value="${appointmentToEdit.datetwo}"></span>
+                <span>وقت الدخول : <select id="edit-time">
+                ${timeOptions.map(option => `<option value="${option}">${option}</option>`).join("")}
+                </select></span>
+                <span>وقت الخروج : <select id="edit-timetwo">
+                ${timetwoOptions.map(option => `<option value="${option}">${option}</option>`).join("")}
+                </select></span>
+                <span>رقم الهاتف : <input type="text" id="edit-number" value="${appointmentToEdit.number}"></span>
+                <span>العربون : <input type="text" id="edit-deposit" value="${appointmentToEdit.deposit}"></span>
+                <span>الايجار : <input type="text" id="edit-rent" value="${appointmentToEdit.rent}"></span>
+                <br>
+                <div class="appointmentToEditButtons">
+                <button id="save-button" class="save-button">حفظ</button>
+                <button id="close-button" class="cancel-button">الغاء</button>
+                </div>
+              `;
+              document.body.appendChild(modal);
+
+              // Kaydet butonuna tıklandığında güncelleme işlemini gerçekleştir
+              document.getElementById("save-button").addEventListener("click", async () => {
+                const overlay = document.querySelector(".overlay");
+                if (overlay) {
+                  overlay.remove();
+                }
+                const updatedAppointment = {
+                  name: document.getElementById("edit-name").value,
+                  dateone: document.getElementById("edit-dateone").value,
+                  datetwo: document.getElementById("edit-datetwo").value,
+                  time: document.getElementById("edit-time").value,
+                  timetwo: document.getElementById("edit-timetwo").value,
+                  deposit: document.getElementById("edit-deposit").value,
+                  rent: document.getElementById("edit-rent").value,
+                  number: document.getElementById("edit-number").value
+                };
+
+                const selectedDate = new Date(updatedAppointment.datetwo);
+                const selectedDateString = selectedDate.toISOString().split("T")[0];
+                const selectedStartTime = updatedAppointment.time; // Seçilen başlangıç saatini al
+                const selectedEndTime = updatedAppointment.timetwo; // Seçilen bitiş saatini al
+
+                const conflictingAppointments = appointments.filter(
+                  (appointment) => appointment.datetwo === selectedDateString && appointment._id !== idToEdit
+                );
+
+                // Genel randevu çakışma kontrolü
+                const isDateAlreadyBooked = conflictingAppointments.some(
+                  (appointment) => {
+                    const isSameStartTime = appointment.time === selectedStartTime;
+                    const isSameEndTime = appointment.timetwo === selectedEndTime;
+                    const is11HoursAppointment =
+                      (appointment.time === "10:00" && appointment.timetwo === "21:00") ||
+                      (appointment.time === "22:00" && appointment.timetwo === "09:00");
+                    const is23HoursAppointment = appointment.time === "10:00" && appointment.timetwo === "09:00";
+                    const isNightAppointment = appointment.time === "22:00" && appointment.timetwo === "21:00";
+
+                    // 11 saatlik randevu kontrolü
+                    if (is11HoursAppointment) {
+                      return isSameStartTime || isSameEndTime;
+                    }
+
+                    // 23 saatlik randevu kontrolü
+                    if (isNightAppointment) {
+                      showNotification(
+                        "لا يمكن اضافة حجز , يوجد حجز ليلي",
+                        "error"
+                      );
+                      return true;
+                    }
+                    if (is23HoursAppointment) {
+                      showNotification(
+                        "لا يمكن اضافة حجز , يوجد حجز كامل بهذا اليوم",
+                        "error"
+                      );
+                      return true;
+                    }
+
+                    // Genel randevu çakışma kontrolü
+                    return isSameStartTime && isSameEndTime;
+                  }
+                );
+
+                if (isDateAlreadyBooked) {
+                  showNotification(
+                    "في حجز بنفس الوقت والتاريخ , شوف وقت ثاني.",
+                    "error"
+                  );
+                  return;
+                }
+
+                // 22:00-21:00 arası randevuları kontrol et
+                const hasOvernightAppointment = conflictingAppointments.some(
+                  (appointment) => appointment.time === "22:00" && appointment.timetwo === "21:00"
+                );
+
+                // Eğer mevcut randevular arasında 22:00-21:00 arası bir randevu varsa
+                if (hasOvernightAppointment) {
+                  // İlk gün ve ikinci gün için izin verilen saat aralıkları
+                  const validFirstDay = (selectedStartTime === "10:00" && selectedEndTime === "21:00");
+                  const validSecondDay = (selectedStartTime === "22:00" && selectedEndTime === "09:00");
+
+                  // Geçerli saat aralıkları dışında randevu eklemeyi reddet
+                  if (!validFirstDay && !validSecondDay) {
+                    showNotification(
+                      "في الحجز الليلي بس بتقدر تحجز من الساعة 10 الى 9 مساءًاو اليوم اللي بعده من 10 مساءً الى 9 صباحًا",
+                      "error"
+                    );
+                    return;
+                  }
+                }
+
+                if (
+                  !updatedAppointment.dateone ||
+                  !updatedAppointment.name ||
+                  !updatedAppointment.datetwo ||
+                  !updatedAppointment.number ||
+                  !updatedAppointment.time ||
+                  !updatedAppointment.timetwo ||
+                  !updatedAppointment.deposit ||
+                  !updatedAppointment.rent
+                ) {
+                  showNotification("عبَي كل المعلومات.", "error");
+                  return;
+                }
+
+                const updateResponse = await fetch(`${VERCEL_API}/api/appointments/${idToEdit}`, {
+                  method: "PUT",
+                  headers: {
+                    "Content-Type": "application/json"
+                  },
+                  body: JSON.stringify(updatedAppointment)
+                });
+
+                if (updateResponse.ok) {
+                  // Düzenleme işlemi başarılı olduğunda modalı kapat ve sayfayı yenile
+                    modal.remove();
+                    updateAppointmentList(selectedMonth, currentYear);
+                } else {
+                  console.log("Randevu güncellenemedi.");
+                }
+                
               });
-    
-              if (updateResponse.ok) {
-                // Düzenleme işlemi başarılı olduğunda modalı kapat ve sayfayı yenile
+
+              document.getElementById("close-button").addEventListener("click", async () => {
+                const overlay = document.querySelector(".overlay");
+                const modal = document.querySelector(".modal");
+                if (overlay) {
+                  overlay.remove();
+                }
+                if (modal) {
                   modal.remove();
-                  updateAppointmentList(selectedMonth, currentYear);
-              } else {
-                console.log("Randevu güncellenemedi.");
-              }
-              
+                }
+              });
+            } else {
+              console.log("Randevu getirilemedi.");
             }
-            
-          );
-          document.getElementById("close-button").addEventListener("click", async () => {
-            const overlay = document.querySelector(".overlay");
-            overlay.remove(); 
-            modal.remove();
-          }          
-        );
-          } else {
-            console.log("Randevu getirilemedi.");
           }
-        }
-        
-      });
-    
+          
+        });
+
       appointmentDiv
         .querySelector(".remove-button")
         .addEventListener("click", async (event) => {
@@ -408,36 +516,46 @@ addForm.addEventListener("submit", async (event) => {
           const confirmDelete = confirm("متأكد بدك تحذف الحجز؟");
           // Veriyi sunucudan sil ve MongoDB'den de kaldır
           if (confirmDelete) {
-          const deleteResponse = await fetch(
-            `${VERCEL_API}/api/appointments/${idToDelete}`,
-            {
-              method: "DELETE",
-            }
-          );
+            const deleteResponse = await fetch(
+              `${VERCEL_API}/api/appointments/${idToDelete}`,
+              {
+                method: "DELETE",
+              }
+            );
 
-          if (deleteResponse.ok) {
-            appointments.splice(index, 1);
-            updateAppointmentList(selectedMonth, currentYear);
-            updateCalendar(selectedMonth, currentYear);
-            updateTotal(selectedMonth, currentYear);
-          }} else {
+            if (deleteResponse.ok) {
+              appointments.splice(index, 1);
+              updateAppointmentList(selectedMonth, currentYear);
+              updateCalendar(selectedMonth, currentYear);
+              updateTotal(selectedMonth, currentYear);
+            } else {
+              console.log("Silme işlemi başarısız.");
+            }
+          } else {
             console.log("Silme işlemi iptal edildi.");
           }
         });
       appointmentList.appendChild(appointmentDiv);
-      }
-    });
-    document.addEventListener("click", function(event) {
-      const overlay = document.querySelector(".overlay");
-      const modal = document.querySelector(".modal");
-      // Eğer tıklanan öğe overlay ise veya overlay'in içinde bulunmuyorsa modal ve overlay'i kapat
-      if (event.target === overlay || !modal.contains(event.target)) {
-        overlay.remove();
+    }
+  });
+
+  document.addEventListener("click", function(event) {
+    const overlay = document.querySelector(".overlay");
+    const modal = document.querySelector(".modal");
+    if (overlay && event.target === overlay) {
+      overlay.remove();
+      if (modal) {
         modal.remove();
       }
-    });
-  }
-
+    }
+    if (modal && !modal.contains(event.target)) {
+      modal.remove();
+      if (overlay) {
+        overlay.remove();
+      }
+    }
+  });
+}
     //dateoneInput.value = "";
     nameInput.value = "";
     //datetwoInput.value = "";
@@ -446,11 +564,11 @@ addForm.addEventListener("submit", async (event) => {
     numberInput.value = "";
     depositInput.value = "";
     rentInput.value = "";
-  
-  
   //updateAppointmentList(currentMonth, currentYear);
 });
 
+
+//* TOTAL
 async function updateTotal(selectedMonth, currentYear) {
   const totalRentSpan = document.getElementById("total-amount");
   const totalDepositSpan = document.getElementById("total-deposit-amount"); // Değiştirildi
@@ -483,7 +601,7 @@ async function updateTotal(selectedMonth, currentYear) {
     });
 }
 
-
+//* CALENDAR
 async function updateCalendar(selectedMonth) {
   const calendar = document.querySelector(".calendar");
   calendar.innerHTML = "";
@@ -509,7 +627,6 @@ async function updateCalendar(selectedMonth) {
     const VERCEL_API = "https://nedaa-park-server.vercel.app";
     const response = await fetch(`${VERCEL_API}/api/appointments`);
     const data = await response.json();
-    //console.log("Calendar : " , data)
 
     // İlk günün haftanın hangi gününe denk geldiğini bulun
     const firstDayOfMonth = new Date(currentYear, selectedMonth, 1).getDay();
@@ -524,31 +641,76 @@ async function updateCalendar(selectedMonth) {
       calendar.appendChild(emptyElement);
     }
 
+    // Günlük randevuların renklerini belirlemek için işleyin
+    const dayAppointments = {};
+
+    data.forEach((appointment) => {
+      const appointmentDate = new Date(appointment.datetwo);
+      const appointmentEndDate = new Date(appointment.datetwo);
+
+      // Eğer randevu 22:00-21:00 arasına yayılıyorsa, bitiş tarihini bir gün ileri al
+      if (appointment.time === "22:00" && appointment.timetwo === "21:00") {
+        appointmentEndDate.setDate(appointmentEndDate.getDate() + 1);
+      }
+
+      let currentDay = new Date(appointmentDate);
+      while (currentDay <= appointmentEndDate) {
+        const dayKey = currentDay.toDateString();
+
+        if (!dayAppointments[dayKey]) {
+          dayAppointments[dayKey] = [];
+        }
+
+        dayAppointments[dayKey].push(appointment);
+        currentDay.setDate(currentDay.getDate() + 1);
+      }
+    });
+
     for (let day = 1; day <= daysInMonth; day++) {
       const dayElement = document.createElement("div");
       dayElement.classList.add("day");
       dayElement.textContent = day;
 
       const currentDate = new Date(currentYear, selectedMonth, day);
-      const appointmentsOnDay = data.filter((appointment) => {
-        const appointmentDate = new Date(appointment.datetwo);
-        return (
-          currentDate.toDateString() === appointmentDate.toDateString() &&
-          appointmentDate.getMonth() === selectedMonth
-        );
-      });
+      const dayKey = currentDate.toDateString();
 
-      let backgroundColor = "#D6DAC8";
-      
-      if (appointmentsOnDay.length > 0) {
-        const hoursDiff = calculateHoursDiff(appointmentsOnDay[0]);
-        
-        if (appointmentsOnDay.length > 1) {
-          backgroundColor = "#63b8d4"; // İki randevu olduğunda mavi yap
-        } else if (hoursDiff > 11) {
-          backgroundColor = "#95b66a"; // Yeşil
+      let backgroundColor = "#D6DAC8"; // Varsayılan renk
+      const appointments = dayAppointments[dayKey];
+
+      if (appointments) {
+        if (appointments.length > 1) {
+          // Aynı gün içinde birden fazla randevu varsa, ikinci ve sonraki randevular mavi
+          const firstAppointment = appointments[0];
+          const hoursDiff = calculateHoursDiff(firstAppointment);
+          backgroundColor = hoursDiff > 11 ? "#95b66a" : "#FFC95F"; // Yeşil veya Sarı
+
+          // İkinci randevu varsa ve ilk randevudan farklıysa, mavi renk ver
+          if (appointments.length > 1) {
+            backgroundColor = "#63b8d4"; // Mavi
+          }
         } else {
-          backgroundColor = "#FFC95F"; // Sarı
+          const appointment = appointments[0];
+          const hoursDiff = calculateHoursDiff(appointment);
+
+          if (appointment.time === "22:00" && appointment.timetwo === "21:00") {
+            // Eğer randevu 22:00-21:00 arasına yayılıyorsa, ilk gün pembe, ikinci gün sarı olacak
+            const appointmentDate = new Date(appointment.datetwo);
+            const appointmentEndDate = new Date(appointment.datetwo);
+            appointmentEndDate.setDate(appointmentEndDate.getDate() + 1);
+            
+            const isFirstDay = currentDate.toDateString() === appointmentDate.toDateString();
+            const isSecondDay = currentDate.toDateString() === appointmentEndDate.toDateString();
+            
+            if (isFirstDay) {
+              backgroundColor = "#FFC0CB"; // Pembe
+            } else if (isSecondDay) {
+              backgroundColor = "#FFC95F"; // Sarı
+            } else {
+              backgroundColor = hoursDiff > 11 ? "#95b66a" : "#FFC95F"; // Yeşil veya Sarı
+            }
+          } else {
+            backgroundColor = hoursDiff > 11 ? "#95b66a" : "#FFC95F"; // Yeşil veya Sarı
+          }
         }
       }
 
@@ -561,9 +723,7 @@ async function updateCalendar(selectedMonth) {
 }
 updateCalendar();
 
-
-
-
+//* HOURS
 function calculateHoursDiff(appointment) {
   const startTime = parseInt(appointment.time.split(":")[0]);
   const endTime = parseInt(appointment.timetwo.split(":")[0]);
